@@ -1,7 +1,5 @@
 package com.yyq.DesignPattern.creational.factorymethod;
 
-import com.yyq.DesignPattern.creational.simplefactory.JavaVideo;
-
 public class Test {
     /*public static void main(String[] args) {
         VideoFactory videoFactory = new VideoFactory();

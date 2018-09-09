@@ -31,6 +31,7 @@ class SuperCar implements ICar{
         car.move();
     }
 }
+
 // ConcreteDecorator 具体装饰角色
 class FlyCar extends SuperCar{
 
@@ -47,6 +48,7 @@ class FlyCar extends SuperCar{
         fly();
     }
 }
+
 // ConcreteDecorator 具体装饰角色
 class WaterCar extends SuperCar{
 
@@ -63,6 +65,7 @@ class WaterCar extends SuperCar{
         swim();
     }
 }
+
 // ConcreteDecorator 具体装饰角色
 class AICar extends SuperCar{
 
