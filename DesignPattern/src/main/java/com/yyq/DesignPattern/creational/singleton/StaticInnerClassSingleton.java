@@ -14,4 +14,11 @@ public class StaticInnerClassSingleton {
         return InnerClass.staticInnerClassSingleton;
     }
 
+    private StaticInnerClassSingleton(){
+        //单例模式-反射攻击解决方案
+        if(InnerClass.staticInnerClassSingleton != null){
+            throw  new RuntimeException("单例构造器禁止反射调用");
+        }
+    }
+
 }
