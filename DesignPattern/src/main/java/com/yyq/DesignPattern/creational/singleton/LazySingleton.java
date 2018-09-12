@@ -20,6 +20,22 @@ public class LazySingleton {
          }
         return lazySingleton;
     }
+
+    public static void main(String[] args) {
+        Thread t1 = new Thread(new T());
+        Thread t2 = new Thread(new T());
+        t1.start();
+        t2.start();
+        System.out.println("program is end");
+    }
+    static class T implements Runnable{
+
+        @Override
+        public void run() {
+            LazySingleton lazySingleton = LazySingleton.getInstance();
+            System.out.println(Thread.currentThread().getName()+" "+lazySingleton);
+        }
+    }
     /*private static LazySingleton lazySingleton = null;
     private static boolean flag = true;
     private LazySingleton(){

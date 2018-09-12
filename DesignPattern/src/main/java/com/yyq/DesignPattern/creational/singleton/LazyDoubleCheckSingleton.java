@@ -1,7 +1,7 @@
 package com.yyq.DesignPattern.creational.singleton;
 
 /**
- * 双重检查机制的懒加载单例模式
+ * 单例模式-懒加载，双重检查机制
  */
 public class LazyDoubleCheckSingleton {
     private volatile static LazyDoubleCheckSingleton lazyDoubleCheckSingleton = null;
@@ -21,5 +21,22 @@ public class LazyDoubleCheckSingleton {
             }
         }
         return lazyDoubleCheckSingleton;
+    }
+
+    public static void main(String[] args) {
+        Thread t1 = new Thread(new T());
+        Thread t2 = new Thread(new T());
+        t1.start();
+        t2.start();
+        System.out.println("program is end");
+    }
+
+    static class T implements Runnable{
+
+        @Override
+        public void run() {
+            LazyDoubleCheckSingleton lazyDoubleCheckSingleton = LazyDoubleCheckSingleton.getInstance();
+            System.out.println(Thread.currentThread().getName()+" "+lazyDoubleCheckSingleton);
+        }
     }
 }

@@ -27,4 +27,22 @@ public class ContainerSingleton {
     public static Object getInstance(String key){
         return singletonMap.get(key);
     }
+
+    public static void main(String[] args) {
+        Thread t1 = new Thread(new T());
+        Thread t2 = new Thread(new T());
+        t1.start();
+        t2.start();
+        System.out.println("program is end");
+    }
+
+    static class T implements Runnable{
+
+        @Override
+        public void run() {
+            ContainerSingleton.putInstance("object",new Object());
+            Object instance = ContainerSingleton.getInstance("object");
+            System.out.println(Thread.currentThread().getName()+" "+instance);
+        }
+    }
 }

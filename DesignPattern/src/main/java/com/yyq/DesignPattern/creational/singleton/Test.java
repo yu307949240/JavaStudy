@@ -7,11 +7,19 @@ import java.lang.reflect.InvocationTargetException;
 public class Test {
     public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
        // LazySingleton lazySingleton = LazySingleton.getInstance();
-        /*Thread t1 = new Thread(new T());
+        System.out.println("main thread"+ThreadLocalInstance.getInstance());
+        System.out.println("main thread"+ThreadLocalInstance.getInstance());
+        System.out.println("main thread"+ThreadLocalInstance.getInstance());
+        System.out.println("main thread"+ThreadLocalInstance.getInstance());
+        System.out.println("main thread"+ThreadLocalInstance.getInstance());
+        System.out.println("main thread"+ThreadLocalInstance.getInstance());
+        System.out.println("main thread"+ThreadLocalInstance.getInstance());
+        System.out.println("main thread"+ThreadLocalInstance.getInstance());
+        Thread t1 = new Thread(new T());
         Thread t2 = new Thread(new T());
         t1.start();
         t2.start();
-        System.out.println("Program end");*/
+        System.out.println("Program end");
         /*HungrySingleton instance = HungrySingleton.getInstance();
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("singleton_file"));
         oos.writeObject(instance);
@@ -50,11 +58,7 @@ public class Test {
 //
 //        constructor.setAccessible(true);
 //        EnumInstance enumInstance = (EnumInstance) constructor.newInstance("Geely",666);
-        Thread t1 = new Thread(new T());
-        Thread t2 = new Thread(new T());
-        t1.start();
-        t2.start();
-        System.out.println("Program end");
+
 
     }
 }
