@@ -3,23 +3,11 @@ package com.yyq.DesignPattern.creational.singleton;
 import java.io.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class Test {
     public static void main(String[] args) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
        // LazySingleton lazySingleton = LazySingleton.getInstance();
-        System.out.println("main thread"+ThreadLocalInstance.getInstance());
-        System.out.println("main thread"+ThreadLocalInstance.getInstance());
-        System.out.println("main thread"+ThreadLocalInstance.getInstance());
-        System.out.println("main thread"+ThreadLocalInstance.getInstance());
-        System.out.println("main thread"+ThreadLocalInstance.getInstance());
-        System.out.println("main thread"+ThreadLocalInstance.getInstance());
-        System.out.println("main thread"+ThreadLocalInstance.getInstance());
-        System.out.println("main thread"+ThreadLocalInstance.getInstance());
-        Thread t1 = new Thread(new T());
-        Thread t2 = new Thread(new T());
-        t1.start();
-        t2.start();
-        System.out.println("Program end");
         /*HungrySingleton instance = HungrySingleton.getInstance();
         ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("singleton_file"));
         oos.writeObject(instance);
@@ -59,6 +47,11 @@ public class Test {
 //        constructor.setAccessible(true);
 //        EnumInstance enumInstance = (EnumInstance) constructor.newInstance("Geely",666);
 
-
+        HungrySingleton hungrySingleton = HungrySingleton.getInstance();
+        Method method = hungrySingleton.getClass().getDeclaredMethod("clone");
+        method.setAccessible(true);
+        HungrySingleton cloneHungrySingleton = (HungrySingleton) method.invoke(hungrySingleton);
+        System.out.println(hungrySingleton);
+        System.out.println(cloneHungrySingleton);
     }
 }

@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * 单例模式-恶汉式
  */
-public class HungrySingleton implements Serializable {
+public class HungrySingleton implements Serializable,Cloneable{
     private final static HungrySingleton hungrySingleton;//声明为final的静态变量，必须在类加载完成时完成赋值
     static{
         hungrySingleton = new HungrySingleton();
@@ -23,5 +23,10 @@ public class HungrySingleton implements Serializable {
 
     private Object readResolve(){
         return hungrySingleton;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
