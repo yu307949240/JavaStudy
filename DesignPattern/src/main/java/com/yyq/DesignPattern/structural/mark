@@ -52,7 +52,21 @@ BufferedReader InputStream org.springframework.cache.transaction.TransactionAwar
 适配器编写过程中需要全面的考虑，可能会增加系统的复杂性；
 增加代码可读的难度。
 适配器-扩展
-对象适配器：符合组合复用原则，使用委托机制。
-类适配器：通过类继承
+1.对象适配器：符合组合复用原则，使用委托机制。
+2.类适配器：通过类继承
 适配器-相关设计模式
 适配器模式和外观模式
+javax.xml.bind.annotation.adapters.XmlAdapter
+org.springframework.aop.framework.adapter
+org.springframework.web.servlet.HandlerAdapter
+org.springframework.web.servlet.DispatcherServlet
+======================================================================================================
+享元-定义与类型
+定义：提供了减少对象数量从而改善应用所需的对象结构的方式；
+     运用共享技术有效地支持大量细粒度的对象。
+类型：结构型
+享元-使用场景
+1.常常用于系统底层的开发，以便解决系统的性能问题；
+2.系统有大量相似对象，需要缓冲池的场景。
+String类型
+数据库连接池
