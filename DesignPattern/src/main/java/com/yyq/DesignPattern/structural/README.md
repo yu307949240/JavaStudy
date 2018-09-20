@@ -127,4 +127,36 @@ org.apache.ibtais.scripting.xmltags.SqlNode
 桥接模式和组合模式  
 桥接模式和适配器模式  
 java.sql.Driver
-java.sql.DriverManager
+java.sql.DriverManager  
+### [代理模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/structural/proxy/)
+* 代理-定义与类型  
+定义：为其他对象提供一种代理，以控制对这个对象的访问  
+代理对象在客户端和目标对象之间起到中介的作用（类似于中介和租房者）    
+类型：结构型  
+* 代理-适用场景  
+保护目标对象  
+增强目标对象  
+* 代理-优点
+代理模式能够将代理对象与真实被调用的目标对象分离  
+一定程度上降低了系统的耦合度，扩展性好  
+保护目标对象  
+* 代理-缺点  
+代理模式会造成系统设计中类的数目增加  
+在客户端和目标对象增加一个代理对象，会造成请求处理速度变慢  
+增加了系统的复杂度  
+* 代理-扩展  
+静态代理(通过在代码中显示的创建一个业务实现类的代理)    
+动态代理(**实现`InvocationHandler`接口**动态代理无法代理类，只能代理接口)  
+CGLib代理(通过**继承**会生成一个被代理类的子类，覆盖其中的方法)   
+* Spring代理选择-扩展
+  * 当Bean有实现接口时，Spring就会用JDK的动态代理  
+  * 当bean没有实现接口时，Spring适用CGLib  
+  * 可以强制使用CGLib
+     * 在Spring配置中加入`<aop:aspectj-autoproxy proxy-target-class="true"/> `
+* 代理-相关设计模式  
+代理模式和装饰者模式   
+代理模式和适配器模式：适配器模式是改变接口的，代理模式是不改变接口的。
+org.springframework.aop.framework.CglibAopProxy  
+org.springframework.aop.framework.JdkDynamicAopProxy  
+org.apache.ibatis.binding.MapperProxyFactory  
+  

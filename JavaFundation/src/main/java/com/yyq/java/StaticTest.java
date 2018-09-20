@@ -2,6 +2,8 @@ package com.yyq.java;
 
 /**
  * static执行顺序：静态代码快-》非静态代码块-》构造方法
+ * @author yyq
+ * @since 18/09/15
  */
 public class StaticTest {
     public StaticTest(){
