@@ -25,3 +25,18 @@ java.util.AbstractList.get()
 java.util.Abstractset  
 java.util.AbstractMap  
 javax.servlet.http.HttpServlet  
+### [迭代器模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/behavioral/iterator)
+* 迭代器-定义与类型  
+定义：提供一个方法，顺序访问集合中的各个元素，而不暴露该对象的内部表示  
+类型：行为型  
+* 迭代器-适用场景  
+访问一个集合对象的内容而无需暴露它的内部表示  
+为遍历不同集合结构提供一个统一的访问接口
+* 迭代器-优点  
+分离了集合对象的遍历行为  
+* 迭代器-缺点  
+类的个数成对增加  
+* 迭代器-相关设计模式   
+迭代器模式和访问者模式   
+java.util.Iterator  
+java.util.ArrayList.Itr  
