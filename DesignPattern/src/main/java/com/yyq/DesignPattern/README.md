@@ -5,6 +5,14 @@
   * [4.建造者](#4建造者)
   * [5.单例模式](#5单例模式)
   * [6.原型模式](#6原型模式)
+* [二、结构型设计模式](#二结构型设计模式)
+  * [1.外观](#1外观)
+  * [2.装饰者](#2装饰者)
+  * [3.适配器](#3适配器)
+  * [4.享元](#4享元)
+  * [5.组合](#5组合)
+  * [6.桥接](#6桥接)
+  * [7.代理](#7代理)
 
 # 一、创建型设计模式
 
@@ -576,4 +584,422 @@ public enum EnumInstance {
 1.必须配置克隆方法  
 2.对克隆复杂对象或克隆出的对象进行复杂改造时，容易引入风险  
 3.深拷贝和浅拷贝要运用得当  
+
+# 二、结构型设计模式
+
+## 1.外观
+
+* 外观-定义与类型  
+定义：又叫门面模式，提供了一个统一的接口，用来访问系统中的一群接口；外观模式定义的一个高层接口，让子系统更容易调用  
+类型：结构型  
+* 外观-适用场景  
+子系统越来越复杂，增加外观模式提供简单调用接口；  
+构建多层系统结构，利用外观对喜庆作为每层的入口，简化层间调用。  
+* 外观-优点  
+简化了调用过程，无需了解深入子系统，防止带来风险；  
+减少系统依赖，松散耦合；  
+更好的划分访问层次；  
+符合迪米特法则，即最少知道原则。  
+* 外观-缺点 
+增加子系统，扩展子系统行为容易引入风险；  
+不符合开闭原则。  
+* 外观-相关设计模式  
+外观模式和中介者模式：外观模式关注系统之间的交互；中介者模式关注系统系统内部各个子模块的交互。  
+单例模式和单例模式  
+外观模式和抽象工厂模式  
+
+### Intent
+
+提供了一个统一的接口，用来访问子系统中的一群接口，从而让子系统更容易使用。
+
+### Implementation
+
+```java
+
+/**
+ * 外观模式（门面模式）; https://www.cnblogs.com/lthIU/p/5860607.html
+ */
+public class Computer {
+    private CPU cpu;
+    private Memory memory;
+    private Disk disk;
+
+    public Computer(){
+        cpu = new CPU();
+        memory = new Memory();
+        disk = new Disk();
+    }
+
+    public void start(){
+        cpu.start();
+        memory.start();
+        disk.start();
+    }
+
+    public void shutDown(){
+        cpu.shutDown();
+        memory.shutDown();
+        disk.shutDown();
+    }
+
+}
+
+class CPU {
+    public void start() {
+        System.out.println("cpu is start...");
+    }
+
+    public void shutDown() {
+        System.out.println("CPU is shutDown...");
+    }
+}
+
+class Memory{
+    public void start() {
+        System.out.println("Memory is start...");
+    }
+
+    public void shutDown() {
+        System.out.println("Memory is shutDown...");
+    }
+}
+
+class Disk{
+    public void start() {
+        System.out.println("Disk is start...");
+    }
+
+    public void shutDown() {
+        System.out.println("Disk is shutDown...");
+    }
+}
+```
+
+### Examples
+
+org.springframework.jdbc.support.JdbcUtils   
+
+### 设计原则
+
+最少知道原则：只和你的密友谈话。也就是说客户对象所需要交互的对象应当尽可能少。
+
+## 2.装饰者
+
+* 装饰者-定义与类型  
+定义：在不改变原有对象的基础之上，将功能附加到对象上  
+     提供了比继承更有弹性的替代方案（扩展原有对象功能）  
+类型：结构型  
+* 装饰者-适用场景  
+1.扩展一个类的功能或给一个类添加附加职责；  
+2.动态的给一个对象添加功能，这些功能可以在动态的撤销。  
+* 装饰者-优点  
+继承的有力补充，比继承灵活，不改变原有对象情况下给一个对象扩展功能；  
+通过使用不同的装饰类以及这些装饰类的排列组合，可以实现不同的效果；  
+符合开闭原则。  
+* 装饰者-缺点  
+会出现更多的代码，更多的类，增加程序的复杂性；  
+动态装饰时，多层装饰时会更复杂。  
+装饰者-相关设计模式  
+装饰者模式和代理模式  
+装饰者模式和适配器模式  
+
+```java
+/**
+ * 装饰器模式; https://www.cnblogs.com/zhangtianq/p/6091047.html
+ * create by yyq on 2018/08/18
+ */
+
+/***
+ * 抽象组件
+ */
+public interface ICar {
+    void move();
+}
+
+// ConcreteComponent 具体构件角色（真实对象）
+class Car implements ICar{
+
+    @Override
+    public void move() {
+        System.out.println("陆地上跑");
+    }
+}
+
+class SuperCar implements ICar{
+    private ICar car;
+    public SuperCar(ICar car){
+        this.car = car;
+    }
+
+    @Override
+    public void move() {
+        car.move();
+    }
+}
+
+// ConcreteDecorator 具体装饰角色
+class FlyCar extends SuperCar{
+
+    public FlyCar(ICar car) {
+        super(car);
+    }
+
+    public void fly(){
+        System.out.println("天上飞");
+    }
+    @Override
+    public void move(){
+        super.move();
+        fly();
+    }
+}
+
+// ConcreteDecorator 具体装饰角色
+class WaterCar extends SuperCar{
+
+    public WaterCar(ICar car) {
+        super(car);
+    }
+
+    public void swim(){
+        System.out.println("水里游");
+    }
+    @Override
+    public void move(){
+        super.move();
+        swim();
+    }
+}
+
+// ConcreteDecorator 具体装饰角色
+class AICar extends SuperCar{
+
+    public AICar(ICar car) {
+        super(car);
+    }
+
+    public void autoMove(){
+        System.out.println("自动跑");
+    }
+    @Override
+    public void move(){
+        super.move();
+        autoMove();
+    }
+}
+```
+
+### 设计原则
+
+类应该对扩展开放，对修改关闭：也就是添加新功能时不需要修改代码。饮料可以动态添加新的配料，而不需要去修改饮料的代码。
+
+不可能把所有的类设计成都满足这一原则，应当把该原则应用于最有可能发生改变的地方。
+
+### JDK
+
+- java.io.BufferedInputStream(InputStream)
+- java.io.DataInputStream(InputStream)
+- java.io.BufferedOutputStream(OutputStream)
+- java.util.zip.ZipOutputStream(OutputStream)
+- java.util.Collections#checked[List|Map|Set|SortedSet|SortedMap]()
+
+## 3.适配器
+
+### Intent
+
+把一个类接口转换成另一个用户需要的接口。
+
+### Implementation
+
+#### 类适配器
+
+
+
+#### 对象适配器
+
+```java
+/**
+ * 适配器模式-对象适配器
+ * @author yyq
+ * @since 18/09/16
+ */
+public class PowerAdapter implements DC5 {
+    private AC220 ac220 = new AC220();
+    @Override
+    public int outputDC5V() {
+        int adapterInput = ac220.outputAc220();
+
+        //变压器
+        int adapterOutput = adapterInput/44;
+        System.out.println("使用PowerAdapter输入AC："+adapterInput+"V"+" 输出DC："+adapterOutput+"V");
+        return adapterOutput;
+    }
+    public static void main(String[] args) {
+        DC5 dc5 = new PowerAdapter();
+        dc5.outputDC5V();
+    }
+}
+
+interface DC5 {
+    int outputDC5V();
+}
+
+class AC220 {
+    public int outputAc220(){
+        int output = 220;
+        System.out.println("输出交流电"+output+"V");
+        return output;
+    }
+}
+```
+### JDK
+
+- [java.util.Arrays#asList()](http://docs.oracle.com/javase/8/docs/api/java/util/Arrays.html#asList%28T...%29)
+- [java.util.Collections#list()](https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html#list-java.util.Enumeration-)
+- [java.util.Collections#enumeration()](https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html#enumeration-java.util.Collection-)
+- [javax.xml.bind.annotation.adapters.XMLAdapter](http://docs.oracle.com/javase/8/docs/api/javax/xml/bind/annotation/adapters/XmlAdapter.html#marshal-BoundType-)
+
+## 6.桥接
+
+### Intent
+
+将抽象与实现分离开来，使它们可以独立变化。
+
+### Implementation
+
+RemoteControl 表示遥控器，指代 Abstraction。
+
+TV 表示电视，指代 Implementor。
+
+桥接模式将遥控器和电视分离开来，从而可以独立改变遥控器或者电视的实现。
+
+```java
+public abstract class TV {
+    public abstract void on();
+
+    public abstract void off();
+
+    public abstract void tuneChannel();
+}
+```
+
+```java
+public class Sony extends TV {
+    @Override
+    public void on() {
+        System.out.println("Sony.on()");
+    }
+
+    @Override
+    public void off() {
+        System.out.println("Sony.off()");
+    }
+
+    @Override
+    public void tuneChannel() {
+        System.out.println("Sony.tuneChannel()");
+    }
+}
+```
+```java
+public class RCA extends TV {
+    @Override
+    public void on() {
+        System.out.println("RCA.on()");
+    }
+
+    @Override
+    public void off() {
+        System.out.println("RCA.off()");
+    }
+
+    @Override
+    public void tuneChannel() {
+        System.out.println("RCA.tuneChannel()");
+    }
+}
+```
+
+```java
+public abstract class RemoteControl {
+    protected TV tv;
+
+    public RemoteControl(TV tv) {
+        this.tv = tv;
+    }
+
+    public abstract void on();
+
+    public abstract void off();
+
+    public abstract void tuneChannel();
+}
+```
+```java
+public class ConcreteRemoteControl1 extends RemoteControl {
+    public ConcreteRemoteControl1(TV tv) {
+        super(tv);
+    }
+
+    @Override
+    public void on() {
+        System.out.println("ConcreteRemoteControl1.on()");
+        tv.on();
+    }
+
+    @Override
+    public void off() {
+        System.out.println("ConcreteRemoteControl1.off()");
+        tv.off();
+    }
+
+    @Override
+    public void tuneChannel() {
+        System.out.println("ConcreteRemoteControl1.tuneChannel()");
+        tv.tuneChannel();
+    }
+}
+```
+```java
+public class ConcreteRemoteControl2 extends RemoteControl {
+    public ConcreteRemoteControl2(TV tv) {
+        super(tv);
+    }
+
+    @Override
+    public void on() {
+        System.out.println("ConcreteRemoteControl2.on()");
+        tv.on();
+    }
+
+    @Override
+    public void off() {
+        System.out.println("ConcreteRemoteControl2.off()");
+        tv.off();
+    }
+
+    @Override
+    public void tuneChannel() {
+        System.out.println("ConcreteRemoteControl2.tuneChannel()");
+        tv.tuneChannel();
+    }
+}
+```
+
+```java
+public class Client {
+    public static void main(String[] args) {
+        RemoteControl remoteControl1 = new ConcreteRemoteControl1(new RCA());
+        remoteControl1.on();
+        remoteControl1.off();
+        remoteControl1.tuneChannel();
+    }
+}
+```
+
+### JDK
+
+- AWT (It provides an abstraction layer which maps onto the native OS the windowing support.)
+- JDBC
+
 
