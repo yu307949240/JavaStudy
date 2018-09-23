@@ -1,4 +1,4 @@
-### [简单工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/simplefactory/)
+## [简单工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/simplefactory/)
 * 简单工厂-适用场景  
 1.工厂类负责创建的对象比较少；  
 2.客户端（应用层）只知道传入工厂类的参数，对于如何创建对象（逻辑）不关心。  
@@ -9,7 +9,7 @@
 应用到到的类：  
 Calendar
 Logger  
-### [工厂方法](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/factorymethod/)
+## [工厂方法](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/factorymethod/)
 * 工厂方法-定义与类型   
 定义：定义一个创建对象的接口，但让实现这个接口的类来决定实力化哪个类，工厂方法让类的实例化推迟到子类中进行  
 类型：创建型  
@@ -23,7 +23,7 @@ Logger
 * 工厂方法-缺点  
 1.类的个数容易过多，增加复杂度  
 2.增加类系统的抽象性和理解程度  
-### [抽象工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/abstractfactory/)
+## [抽象工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/abstractfactory/)
 * 抽象工厂-定义与类型  
 定义：1.抽象工厂模式提供一个创建一系列相关或相互依赖对象的接口。  
      2.无需指定他们的具体类型  
@@ -40,7 +40,7 @@ Logger
 2.增加了系统的抽象性和理解难度  
 java.sql.Connection
 SqlSessionFactory
-### [建造者]()
+## [建造者]()
 * 建造者-定义与类型  
 定义：1.将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示  
      2.用户只需指定需要建造的类型就可以得到它们，建造过程和细节不需要知道  
@@ -58,7 +58,7 @@ SqlSessionFactory
 StringBuilder和StringBuffer是标准的建造者模式实现的！！  
 ImmutableSet
 SqlSessionFactoryBuilder
-### [单例模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/singleton/)
+## [单例模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/singleton/)
 * 单例模式-定义与类型  
 定义：保证一个类仅有一个实力，并提供一个全局访问点  
 类型：创建型  
@@ -71,7 +71,7 @@ SqlSessionFactoryBuilder
 可以避免对资源的多重占用  
 设置全局访问点，严格控制访问  
 * 单例模式-缺点  
-没有接口，扩展困难  
+没有接口，扩展困难 
 * 单例模式-重点  
 1.私有构造器  
 2.线程安全  
@@ -86,8 +86,154 @@ mybatis: ErrorContext，保证了每个线程各自的数据，不同的线程�
 3.多线程Debug  
 单例模式-相关设计模式  
 单例模式和工厂模式  
-单例模式和享元模式  
-### [原型模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/prototype/)
+单例模式和享元模式
+### Implementation
+#### Ⅰ 懒汉式-线程不安全
+以下实现方式，如果是多线程执行的时候，多个线程同时进入`if(lazySingleton == null)`，执行多次`lazySingleton = new LazySingleton();`  
+将导致实例化多次 lazySingleton。
+
+```java
+/**
+ * 单例模式-懒汉式，注重延迟加载，只有使用该类的时候才进行初始化。
+ */
+public class LazySingleton {
+    private static LazySingleton lazySingleton = null;
+    private LazySingleton(){
+        if(lazySingleton != null){
+            throw new RuntimeException("单例构造器禁止反射调用");
+        }
+    }
+    public synchronized static LazySingleton getInstance(){
+        if(lazySingleton == null){
+            lazySingleton = new LazySingleton();
+         }
+        return lazySingleton;
+    }
+}
+```
+#### Ⅱ 饿汉式-线程安全
+由于线程不安全的方式导致instance被实例化多次，采取直接实例化 uniqueInstance 的方式就不会产生线程不安全问题。
+
+但是直接实例化的方式(饿汉式)也丢失了延迟实例化带来的节约资源的好处。
+```java
+/**
+ * 单例模式-恶汉式
+ */
+public class HungrySingleton implements Serializable,Cloneable{
+    private final static HungrySingleton hungrySingleton;//声明为final的静态变量，必须在类加载完成时完成赋值
+    static{
+        hungrySingleton = new HungrySingleton();
+    }
+    private HungrySingleton(){
+        if(hungrySingleton != null){
+            throw new RuntimeException("单例构造器禁止反射调用");
+        }
+    }
+    public static HungrySingleton getInstance(){
+        return hungrySingleton;
+    }
+
+    private Object readResolve(){
+        return hungrySingleton;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
+```
+#### Ⅲ 懒汉式-线程安全
+```java
+/**
+ * 单例模式-懒汉式，注重延迟加载，只有使用该类的时候才进行初始化。
+ */
+public class LazySingleton {
+    private static LazySingleton lazySingleton = null;
+    private LazySingleton(){
+        if(lazySingleton != null){
+            throw new RuntimeException("单例构造器禁止反射调用");
+        }
+    }
+    public synchronized static LazySingleton getInstance(){
+        if(lazySingleton == null){
+            lazySingleton = new LazySingleton();
+         }
+        return lazySingleton;
+    }
+}
+```
+#### Ⅳ 双重校验锁-线程安全
+双重校验先判断instance是否已经被实例化，如果没有被实例化，那么才对实例化语句进行加锁。
+```java
+/**                                                                            
+ * 单例模式-懒加载，双重检查机制                                                             
+ */                                                                            
+public class LazyDoubleCheckSingleton {                                        
+    private volatile static LazyDoubleCheckSingleton lazyDoubleCheckSingleton; 
+                                                                               
+    private LazyDoubleCheckSingleton(){}                                       
+                                                                               
+    public static LazyDoubleCheckSingleton getInstance() {                     
+        if(lazyDoubleCheckSingleton == null){                                  
+            synchronized (LazyDoubleCheckSingleton.class){                     
+                if(lazyDoubleCheckSingleton == null){                          
+                    lazyDoubleCheckSingleton = new LazyDoubleCheckSingleton(); 
+                    // 1.分配内存                                                  
+                    // 2.初始化对象                                                 
+                    // 3.将指针指向内存空间                                             
+                }                                                              
+            }                                                                  
+        }                                                                      
+        return lazyDoubleCheckSingleton;                                       
+    }                                                                  
+```
+考虑下面的实现，也就是只使用了一个 if 语句。在 lazyDoubleCheckSingleton == null 的情况下，如果两个线程都执行了 if 语句，那么两个线程都会进入 if 语句块内。虽然在 if 语句块内有加锁操作，但是两个线程都会执行 `lazyDoubleCheckSingleton = new LazyDoubleCheckSingleton();` 这条语句，只是先后的问题，那么就会进行两次实例化。因此必须使用双重校验锁，也就是需要使用两个 if 语句。
+```java
+synchronized (LazyDoubleCheckSingleton.class){                     
+                if(lazyDoubleCheckSingleton == null){                          
+                    lazyDoubleCheckSingleton = new LazyDoubleCheckSingleton(); 
+                    // 1.分配内存                                                  
+                    // 2.初始化对象                                                 
+                    // 3.将指针指向内存空间                                             
+                }  
+```
+lazyDoubleCheckSingleton 采用volatile关键字修饰也是很有必要的，`lazyDoubleCheckSingleton = new LazyDoubleCheckSingleton();`这段代码  
+分三步执行。
+1.为lazyDoubleCheckSingleton分配内存空间
+2.初始化 lazyDoubleCheckSingleton
+3.将lazyDoubleCheckSingleton指向分配的内存地址、
+但是由于 JVM 具有指令重排的特性，执行顺序有可能变成 1>3>2。指令重排在单线程环境下不会出先问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。例如，线程 T<sub>1</sub> 执行了 1 和 3，此时 T<sub>2</sub> 调用 getInstance() 后发现 lazyDoubleCheckSingleton 不为空，因此返回 lazyDoubleCheckSingleton，但此时 lazyDoubleCheckSingleton 还未被初始化。
+
+使用 volatile 可以禁止 JVM 的指令重排，保证在多线程环境下也能正常运行。
+
+#### Ⅴ 静态内部类实现
+
+```java
+/**
+ * 单例模式-懒汉式，静态内部类-基于类初始化的延迟加载解决方案及原理解析
+ */
+public class StaticInnerClassSingleton {
+    /**
+     * 静态内部类在于哪个线程拿到类的初始化锁，
+     */
+    private static class InnerClass{
+        private static StaticInnerClassSingleton staticInnerClassSingleton = new StaticInnerClassSingleton();
+    }
+    public static StaticInnerClassSingleton getInstance(){
+        return InnerClass.staticInnerClassSingleton;
+    }
+
+    private StaticInnerClassSingleton(){
+        //单例模式-反射攻击解决方案
+        if(InnerClass.staticInnerClassSingleton != null){
+            throw  new RuntimeException("单例构造器禁止反射调用");
+        }
+    }
+}
+```
+
+## [原型模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/prototype/)
 * 原型模式-定义与类型  
 定义：值原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。  
 特点：不需要知道任何的创建细节，不调用构造函数。  
