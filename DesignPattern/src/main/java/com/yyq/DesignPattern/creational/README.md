@@ -1,14 +1,14 @@
-* [创建型设计模式](#创建型设计模式)
-  * [简单工厂](#1-简单工厂)
-  * [工厂方法](#2-工厂方法)
-  * [抽象工厂](#3-抽象工厂)
-  * [建造者](#4-建造者)
-  * [单例模式](#5-单例模式)
-  * [原型模式](#6-原型模式)
+* [一、创建型设计模式](#创建型设计模式)
+  * [1.简单工厂](#1-简单工厂)
+  * [2.工厂方法](#2-工厂方法)
+  * [3.抽象工厂](#3-抽象工厂)
+  * [4.建造者](#4-建造者)
+  * [5.单例模式](#5-单例模式)
+  * [6.原型模式](#6-原型模式)
 
-# [创建型设计模式]
+# [一、创建型设计模式]
 
-## [简单工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/simplefactory/)
+## [1.简单工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/simplefactory/)
 * 简单工厂-适用场景  
 1.工厂类负责创建的对象比较少；  
 2.客户端（应用层）只知道传入工厂类的参数，对于如何创建对象（逻辑）不关心。  
@@ -49,7 +49,7 @@ class JavaVideo extends Video{
     }
 }
 ```
-## [工厂方法](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/factorymethod/)
+## [2.工厂方法](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/factorymethod/)
 * 工厂方法-定义与类型   
 定义：定义一个创建对象的接口，但让实现这个接口的类来决定实力化哪个类，工厂方法让类的实例化推迟到子类中进行  
 类型：创建型  
@@ -105,7 +105,7 @@ class JavaVideo extends Video{
 - [javax.xml.bind.JAXBContext](https://docs.oracle.com/javase/8/docs/api/javax/xml/bind/JAXBContext.html#createMarshaller--)
 
 
-## [抽象工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/abstractfactory/)
+## [3.抽象工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/abstractfactory/)
 * 抽象工厂-定义与类型  
 定义：1.抽象工厂模式提供一个创建一系列相关或相互依赖对象的接口。  
      2.无需指定他们的具体类型  
@@ -216,7 +216,7 @@ SqlSessionFactory
 - [javax.xml.xpath.XPathFactory](http://docs.oracle.com/javase/8/docs/api/javax/xml/xpath/XPathFactory.html#newInstance--)
 
 
-## [建造者]
+## [4.建造者]
 * 建造者-定义与类型  
 定义：1.将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示  
      2.用户只需指定需要建造的类型就可以得到它们，建造过程和细节不需要知道  
@@ -315,7 +315,7 @@ abcdefghijklmnopqrstuvwxyz
 - [java.lang.Appendable](http://docs.oracle.com/javase/8/docs/api/java/lang/Appendable.html)
 - [Apache Camel builders](https://github.com/apache/camel/tree/0e195428ee04531be27a0b659005e3aa8d159d23/camel-core/src/main/java/org/apache/camel/builder)
 
-## [单例模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/singleton/)
+## [5.单例模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/singleton/)
 * 单例模式-定义与类型  
 定义：保证一个类仅有一个实力，并提供一个全局访问点  
 类型：创建型  
@@ -559,7 +559,7 @@ public enum EnumInstance {
 - [java.awt.Desktop#getDesktop()](http://docs.oracle.com/javase/8/docs/api/java/awt/Desktop.html#getDesktop--)
 - [java.lang.System#getSecurityManager()](http://docs.oracle.com/javase/8/docs/api/java/lang/System.html#getSecurityManager--)
 
-## [原型模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/prototype/)
+## [6.原型模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/prototype/)
 * 原型模式-定义与类型  
 定义：值原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。  
 特点：不需要知道任何的创建细节，不调用构造函数。  
