@@ -1,3 +1,10 @@
+* [创建型设计模式](#创建型设计模式)  
+  * [简单工厂](#1-简单工厂)
+  * [工厂方法](#2-工厂方法)
+  * [抽象工厂](#3-抽象工厂)
+  * [建造者](#4-建造者)
+  * [单例模式](#5-单例模式)
+# [创建型设计模式]
 ## [简单工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/simplefactory/)
 * 简单工厂-适用场景  
 1.工厂类负责创建的对象比较少；  
@@ -243,6 +250,64 @@ public class StaticInnerClassSingleton {
     }
 }
 ```
+
+#### Ⅵ 枚举实现
+
+```java
+/**
+ * 单例模式-Enum枚举单例
+ */
+public enum EnumInstance {
+    INSTANCE{
+        protected void printTest(){
+            System.out.println("Geely Print Test");
+        }
+    };
+    protected abstract void printTest();
+    private Object data;
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public static EnumInstance getInstance(){
+        return INSTANCE;
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        EnumInstance instance = EnumInstance.getInstance();
+        instance.setData(new Object());
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("singleton_file"));
+        oos.writeObject(instance);
+
+        File file = new File("singleton_file");
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+        EnumInstance newInstance = (EnumInstance) ois.readObject();
+        System.out.println(instance.getData());
+        System.out.println(newInstance.getData());
+        System.out.println(instance.getData() == newInstance.getData());
+    }
+}
+```
+
+该实现可以防止反射攻击。在其它实现中，通过 setAccessible() 方法可以将私有构造函数的访问级别设置为 public，然后调用构造函数从而实例化对象，如果要防止这种攻击，需要在构造函数中添加防止多次实例化的代码。该实现是由 JVM 保证只会实例化一次，因此不会出现上述的反射攻击。
+
+### Examples
+
+- Logger Classes
+- Configuration Classes
+- Accesing resources in shared mode
+- Factories implemented as Singletons
+
+### JDK
+
+- [java.lang.Runtime#getRuntime()](http://docs.oracle.com/javase/8/docs/api/java/lang/Runtime.html#getRuntime%28%29)
+- [java.awt.Desktop#getDesktop()](http://docs.oracle.com/javase/8/docs/api/java/awt/Desktop.html#getDesktop--)
+- [java.lang.System#getSecurityManager()](http://docs.oracle.com/javase/8/docs/api/java/lang/System.html#getSecurityManager--)
 
 ## [原型模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/prototype/)
 * 原型模式-定义与类型  
