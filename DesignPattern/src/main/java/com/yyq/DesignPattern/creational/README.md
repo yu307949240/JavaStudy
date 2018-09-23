@@ -19,6 +19,36 @@
 应用到到的类：  
 Calendar
 Logger  
+### Implementation
+
+```java
+public class VideoFactory {
+    //用反射来实现简单工厂
+    public Video getVideo(Class c){
+        Video video = null;
+        try {
+            video = (Video) Class.forName(c.getName()).newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return video;
+    }
+}
+public abstract class Video {
+    public abstract void produce();
+}
+
+class JavaVideo extends Video{
+    @Override
+    public void produce() {
+        System.out.println("学习Java课程");
+    }
+}
+```
 ## [工厂方法](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/factorymethod/)
 * 工厂方法-定义与类型   
 定义：定义一个创建对象的接口，但让实现这个接口的类来决定实力化哪个类，工厂方法让类的实例化推迟到子类中进行  
@@ -33,6 +63,48 @@ Logger
 * 工厂方法-缺点  
 1.类的个数容易过多，增加复杂度  
 2.增加类系统的抽象性和理解程度  
+
+### Implementation
+
+```java
+public abstract class VideoFactory {
+    public abstract Video getVideo();
+    public static void main(String[] args) {
+        VideoFactory videoFactory = new JavaVideoFactory();
+        Video video = videoFactory.getVideo();
+        video.produce();
+    }
+}
+
+class JavaVideoFactory extends VideoFactory {
+    @Override
+    public Video getVideo() {
+        return new JavaVideo();
+    }
+}
+
+abstract class Video {
+    public abstract void produce();
+}
+
+class JavaVideo extends Video{
+    @Override
+    public void produce() {
+        System.out.println("学习Java课程");
+    }
+}
+```
+### JDK
+
+- [java.util.Calendar](http://docs.oracle.com/javase/8/docs/api/java/util/Calendar.html#getInstance--)
+- [java.util.ResourceBundle](http://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html#getBundle-java.lang.String-)
+- [java.text.NumberFormat](http://docs.oracle.com/javase/8/docs/api/java/text/NumberFormat.html#getInstance--)
+- [java.nio.charset.Charset](http://docs.oracle.com/javase/8/docs/api/java/nio/charset/Charset.html#forName-java.lang.String-)
+- [java.net.URLStreamHandlerFactory](http://docs.oracle.com/javase/8/docs/api/java/net/URLStreamHandlerFactory.html#createURLStreamHandler-java.lang.String-)
+- [java.util.EnumSet](https://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html#of-E-)
+- [javax.xml.bind.JAXBContext](https://docs.oracle.com/javase/8/docs/api/javax/xml/bind/JAXBContext.html#createMarshaller--)
+
+
 ## [抽象工厂](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/abstractfactory/)
 * 抽象工厂-定义与类型  
 定义：1.抽象工厂模式提供一个创建一系列相关或相互依赖对象的接口。  
@@ -48,8 +120,102 @@ Logger
 * 抽象工厂-缺点  
 1.规定类所有可能被创建的产品集合，产品族中扩展新的产品困难，需要修改抽象工厂的接口  
 2.增加了系统的抽象性和理解难度  
-java.sql.Connection
-SqlSessionFactory
+
+### Class Diagram
+
+抽象工厂模式创建的是对象家族，也就是很多对象而不是一个对象，并且这些对象是相关的，也就是说必须一起创建出来。而工厂方法模式只是用于创建一个对象，这和抽象工厂模式有很大不同。
+
+抽象工厂模式用到了工厂方法模式来创建单一对象，AbstractFactory 中的 createProductA() 和 createProductB() 方法都是让子类来实现，这两个方法单独来看就是在创建一个对象，这符合工厂方法模式的定义。
+
+至于创建对象的家族这一概念是在 Client 体现，Client 要通过 AbstractFactory 同时调用两个方法来创建出两个对象，在这里这两个对象就有很大的相关性，Client 需要同时创建出这两个对象。
+
+从高层次来看，抽象工厂使用了组合，即 Cilent 组合了 AbstractFactory，而工厂方法模式使用了继承
+
+### Implementation
+
+```java
+public class AbstractProductA {
+}
+```
+
+```java
+public class AbstractProductB {
+}
+```
+
+```java
+public class ProductA1 extends AbstractProductA {
+}
+```
+
+```java
+public class ProductA2 extends AbstractProductA {
+}
+```
+
+```java
+public class ProductB1 extends AbstractProductB {
+}
+```
+
+```java
+public class ProductB2 extends AbstractProductB {
+}
+```
+
+```java
+public abstract class AbstractFactory {
+    abstract AbstractProductA createProductA();
+    abstract AbstractProductB createProductB();
+}
+```
+
+```java
+public class ConcreteFactory1 extends AbstractFactory {
+    AbstractProductA createProductA() {
+        return new ProductA1();
+    }
+
+    AbstractProductB createProductB() {
+        return new ProductB1();
+    }
+}
+```
+
+```java
+public class ConcreteFactory2 extends AbstractFactory {
+    AbstractProductA createProductA() {
+        return new ProductA2();
+    }
+
+    AbstractProductB createProductB() {
+        return new ProductB2();
+    }
+}
+```
+
+```java
+public class Client {
+    public static void main(String[] args) {
+        AbstractFactory abstractFactory = new ConcreteFactory1();
+        AbstractProductA productA = abstractFactory.createProductA();
+        AbstractProductB productB = abstractFactory.createProductB();
+        // do something with productA and productB
+    }
+}
+```
+
+### Examples
+java.sql.Connection  
+SqlSessionFactory  
+
+### JDK
+
+- [javax.xml.parsers.DocumentBuilderFactory](http://docs.oracle.com/javase/8/docs/api/javax/xml/parsers/DocumentBuilderFactory.html)
+- [javax.xml.transform.TransformerFactory](http://docs.oracle.com/javase/8/docs/api/javax/xml/transform/TransformerFactory.html#newInstance--)
+- [javax.xml.xpath.XPathFactory](http://docs.oracle.com/javase/8/docs/api/javax/xml/xpath/XPathFactory.html#newInstance--)
+
+
 ## [建造者]
 * 建造者-定义与类型  
 定义：1.将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示  
@@ -65,9 +231,90 @@ SqlSessionFactory
 1.产生多余的Builder对象  
 2.产品内部发生变化，建造者都要修改，成本较大  
 建造者模式更注重于方法的调用顺序，而工厂模式注重于创建产品。  
-StringBuilder和StringBuffer是标准的建造者模式实现的！！  
+StringBuilder和StringBuffer是标准的建造者模式实现的！！
 ImmutableSet
 SqlSessionFactoryBuilder
+
+### Implementation
+
+以下是一个简易的 StringBuilder 实现，参考了 JDK 1.8 源码。
+
+```java
+public class AbstractStringBuilder {
+    protected char[] value;
+
+    protected int count;
+
+    public AbstractStringBuilder(int capacity) {
+        count = 0;
+        value = new char[capacity];
+    }
+
+    public AbstractStringBuilder append(char c) {
+        ensureCapacityInternal(count + 1);
+        value[count++] = c;
+        return this;
+    }
+
+    private void ensureCapacityInternal(int minimumCapacity) {
+        // overflow-conscious code
+        if (minimumCapacity - value.length > 0)
+            expandCapacity(minimumCapacity);
+    }
+
+    void expandCapacity(int minimumCapacity) {
+        int newCapacity = value.length * 2 + 2;
+        if (newCapacity - minimumCapacity < 0)
+            newCapacity = minimumCapacity;
+            if (newCapacity < 0) {
+            if (minimumCapacity < 0) // overflow
+                throw new OutOfMemoryError();
+            newCapacity = Integer.MAX_VALUE;
+        }
+        value = Arrays.copyOf(value, newCapacity);
+    }
+}
+```
+
+```java
+public class StringBuilder extends AbstractStringBuilder {
+    public StringBuilder() {
+        super(16);
+    }
+
+    @Override
+    public String toString() {
+        // Create a copy, don't share the array
+        return new String(value, 0, count);
+    }
+}
+```
+
+```java
+public class Client {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder();
+        final int count = 26;
+        for (int i = 0; i < count; i++) {
+            sb.append((char) ('a' + i));
+        }
+        System.out.println(sb.toString());
+    }
+}
+```
+
+```html
+abcdefghijklmnopqrstuvwxyz
+```
+
+### JDK
+
+- [java.lang.StringBuilder](http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuilder.html)
+- [java.nio.ByteBuffer](http://docs.oracle.com/javase/8/docs/api/java/nio/ByteBuffer.html#put-byte-)
+- [java.lang.StringBuffer](http://docs.oracle.com/javase/8/docs/api/java/lang/StringBuffer.html#append-boolean-)
+- [java.lang.Appendable](http://docs.oracle.com/javase/8/docs/api/java/lang/Appendable.html)
+- [Apache Camel builders](https://github.com/apache/camel/tree/0e195428ee04531be27a0b659005e3aa8d159d23/camel-core/src/main/java/org/apache/camel/builder)
+
 ## [单例模式](/DesignPattern/src/main/java/com/yyq/DesignPattern/creational/singleton/)
 * 单例模式-定义与类型  
 定义：保证一个类仅有一个实力，并提供一个全局访问点  
