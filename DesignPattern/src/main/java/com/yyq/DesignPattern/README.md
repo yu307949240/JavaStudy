@@ -859,6 +859,305 @@ class AC220 {
 - [java.util.Collections#enumeration()](https://docs.oracle.com/javase/8/docs/api/java/util/Collections.html#enumeration-java.util.Collection-)
 - [javax.xml.bind.annotation.adapters.XMLAdapter](http://docs.oracle.com/javase/8/docs/api/javax/xml/bind/annotation/adapters/XmlAdapter.html#marshal-BoundType-)
 
+
+
+## 4.享元
+
+* 享元-定义与类型  
+  定义：提供了减少对象数量从而改善应用所需的对象结构的方式；  
+     运用共享技术有效地支持大量细粒度的对象。  
+  类型：结构型  
+* 享元-使用场景  
+  1.常常用于系统底层的开发，以便解决系统的性能问题；  
+  2.系统有大量相似对象，需要缓冲池的场景。  
+  如果对象的复用度很高可以考虑享元模式  
+  String类型
+  数据库连接池
+* 享元-优点  
+  1.减少对象的创建，降低内存中对象的数量，降低系统的内存，提高效率；  
+  2.减少内存之外的其他资源占用。  
+* 享元-缺点  
+  关注内／外部状态，专注线程安全问题；  
+  使系统，程序的逻辑复杂化。  
+* 享元-扩展  
+  1.内部状态  
+  2.外部状态  
+* 享元-相关设计模式  
+  享元模式和代理模式  
+  享元模式和单例模式（容器单例就是二者的结合）  
+
+### Intent
+
+将对象组合成树形结构来表示“整体/部分”层次关系，允许用户以相同的方式处理单独对象和组合对象。
+
+### Class Diagram
+
+- Flyweight：享元对象
+- IntrinsicState：内部状态，享元对象共享内部状态
+- ExtrinsicState：外部状态，每个享元对象的外部状态不同
+
+
+
+### Implementation
+
+```java
+public interface Employee {
+    void report();
+}
+```
+
+```java
+public class EmployeeFactory {
+    private static final Map<String,Employee> EMPLOYEE_MAP = new HashMap<String,Employee>();
+
+    public static Employee getManager(String department){
+        Manager manager = (Manager) EMPLOYEE_MAP.get(department);
+        if(manager==null){
+            manager = new Manager(department);
+            System.out.print("创建部门经理："+department);
+            String reportContent = department+"部门汇报：此次报告的主要内容是......";
+            manager.setReportContent(reportContent);
+            System.out.println(" 创建报告："+department);
+            EMPLOYEE_MAP.put(department,manager);
+        }
+        return manager;
+    }
+}
+```
+
+```java
+public class Manager implements Employee {
+    @Override
+    public void report() {
+        System.out.println(reportContent);
+    }
+    private String department;
+    private String reportContent;
+
+    public void setReportContent(String reportContent){
+        this.reportContent = reportContent;
+    }
+
+    public Manager(String department){
+        this.department = department;
+    }
+}
+```
+
+```
+/**
+ * 享元模式
+ * @author yyq
+ * @since 18/09/16
+ */
+public class Test {
+    private static final String departments[] = {"RD","QA","PM","BD"};
+
+    /*public static void main(String[] args) {
+        for(int i=0;i<10;i++){
+            String department = departments[(int) (Math.random() * departments.length)];
+
+            Manager manager = (Manager) EmployeeFactory.getManager(department);
+
+            manager.report();
+        }
+    }*/
+    //测试Integer
+    public static void main(String[] args) {
+        Integer a = Integer.valueOf(100);
+        Integer b = 100;
+
+        Integer c = Integer.valueOf(1000);
+        Integer d = 1000;
+
+        System.out.println("a==b: "+(a==b));
+        System.out.println("c==d: "+(c==d));
+    }
+}
+```
+
+
+
+### JDK
+
+Java 利用缓存来加速大量小对象的访问时间。
+
+- java.lang.Integer#valueOf(int)
+- java.lang.Boolean#valueOf(boolean)
+- java.lang.Byte#valueOf(byte)
+- java.lang.Character#valueOf(char)
+
+
+
+## 5.组合
+
+* 组合-定义与类型  
+  定义：将对象组合成树形结构以表示"部分-整体"的层次结构  
+  组合模式使客户端对单个对象和组合对象保持一致的方式处理  
+  类型：结构型  
+
+* 组合-适用场景  
+  希望客户端可以忽略组合对象与单个对象的差异时   
+  处理一个树形结构时  
+
+* 组合-优点  
+  清楚的定义了分层次的复杂对象，表示对象的全部或部分层次  
+  让客户端忽略了层次的差异，方便对整个层次结构进行控制  
+  简化客户端代码  
+  符合开闭原则  
+
+* 组合-缺点  
+  限制类型时比较复杂  
+  使设计变的得更加抽象  
+
+* 组合-相关设计模式  
+  组合模式和访问者模式   
+
+  ###Implementation 
+
+  ```java
+  public abstract class CatalogComponent {
+      public void add(CatalogComponent catalogComponent){
+          throw new UnsupportedOperationException("不支持添加操作");
+      }
+      public void remove(CatalogComponent catalogComponent){
+          throw new UnsupportedOperationException("不支持删除操作");
+      }
+      public String getName(CatalogComponent catalogComponent){
+          throw new UnsupportedOperationException("不支持获取名称操作");
+      }
+      public double getPrice(CatalogComponent catalogComponent){
+          throw new UnsupportedOperationException("不支持获取价格加操作");
+      }
+      public void print(){
+          throw new UnsupportedOperationException("不支持打印操作");
+      }
+  }
+  ```
+
+  ```java
+  public class Course extends CatalogComponent {
+      private String name;
+      private double price;
+  
+      public Course(String name, double price) {
+          this.name = name;
+          this.price = price;
+      }
+  
+      @Override
+      public String getName(CatalogComponent catalogComponent) {
+          return this.name;
+      }
+  
+      @Override
+      public double getPrice(CatalogComponent catalogComponent) {
+          return this.price;
+      }
+  
+      @Override
+      public void print() {
+          System.out.println("Course Name: "+name+"Price:"+price);
+      }
+  }
+  ```
+
+```java
+public class CourseCatalog extends CatalogComponent {
+    private List<CatalogComponent> items = new ArrayList<CatalogComponent>();
+
+    private String name;
+    private Integer level;
+
+    public CourseCatalog(String name,Integer level) {
+        this.name = name;
+        this.level = level;
+    }
+
+    @Override
+    public String getName(CatalogComponent catalogComponent) {
+        return this.name;
+    }
+
+    @Override
+    public void add(CatalogComponent catalogComponent) {
+        items.add(catalogComponent);
+    }
+
+    @Override
+    public void remove(CatalogComponent catalogComponent) {
+        items.remove(catalogComponent);
+    }
+
+    @Override
+    public void print() {
+        System.out.println(this.name);
+        for(CatalogComponent catalogComponent : items){
+            if(this.level!=null){
+                for(int i=0;i<this.level;i++){
+                    System.out.print("  ");
+                }
+            }
+            catalogComponent.print();
+        }
+    }
+}
+```
+
+```java
+/**
+ * 组合模式
+ *
+ * @author yyq
+ * @since 18/09/20
+ */
+public class Test {
+    public static void main(String[] args) {
+        CatalogComponent linuxCourse = new Course("Linux课程", 11);
+
+        CatalogComponent windowsCourse = new Course("Windows课程", 11);
+
+        CatalogComponent javaCourseCatalog = new CourseCatalog("Java课程目录", 2);
+
+        CatalogComponent mmallCourse1 = new Course("Java电商1期", 55);
+        CatalogComponent mmallCourse2 = new Course("Java电商2期", 66);
+        CatalogComponent designPattern = new Course("Java设计模式", 77);
+
+        javaCourseCatalog.add(mmallCourse1);
+        javaCourseCatalog.add(mmallCourse2);
+        javaCourseCatalog.add(designPattern);
+
+        CatalogComponent imoocMainCourselog = new CourseCatalog("慕课网课程主目录", 1);
+        imoocMainCourselog.add(linuxCourse);
+        imoocMainCourselog.add(windowsCourse);
+        imoocMainCourselog.add(javaCourseCatalog);
+
+        imoocMainCourselog.print();
+    }
+}
+```
+
+
+
+### Example
+
+org.apache.ibtais.scripting.xmltags.SqlNode 
+
+
+
+### JDK
+
+- javax.swing.JComponent#add(Component)
+
+- java.awt.Container#add(Component)
+
+- java.util.Map#putAll(Map)
+
+- java.util.List#addAll(Collection)
+
+- java.util.Set#addAll(Collection)
+
+
 ## 6.桥接
 
 ### Intent
@@ -1003,3 +1302,33 @@ public class Client {
 - JDBC
 
 
+
+## 7.代理
+
+### Intent
+
+控制对其它对象的访问。
+
+### Class Diagram
+
+代理有以下四类：
+
+- 远程代理（Remote Proxy）：控制对远程对象（不同地址空间）的访问，它负责将请求及其参数进行编码，并向不同地址空间中的对象发送已经编码的请求。
+- 虚拟代理（Virtual Proxy）：根据需要创建开销很大的对象，它可以缓存实体的附加信息，以便延迟对它的访问，例如在网站加载一个很大图片时，不能马上完成，可以用虚拟代理缓存图片的大小信息，然后生成一张临时图片代替原始图片。
+- 保护代理（Protection Proxy）：按权限控制对象的访问，它负责检查调用者是否具有实现一个请求所必须的访问权限。
+- 智能代理（Smart Reference）：取代了简单的指针，它在访问对象时执行一些附加操作：记录对象的引用次数；当第一次引用一个对象时，将它装入内存；在访问一个实际对象前，检查是否已经锁定了它，以确保其它对象不能改变它。
+
+### Implementation
+
+#### 静态代理
+
+
+
+#### 动态代理
+
+
+
+### JDK
+
+- java.lang.reflect.Proxy
+- RMI
