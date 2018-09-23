@@ -87,10 +87,13 @@ mybatis: ErrorContext，保证了每个线程各自的数据，不同的线程�
 单例模式-相关设计模式  
 单例模式和工厂模式  
 单例模式和享元模式
+
 ### Implementation
-#### Ⅰ 懒汉式-线程不安全
+
+#### Ⅰ 懒汉式-线程不安全   
+
 以下实现方式，如果是多线程执行的时候，多个线程同时进入`if(lazySingleton == null)`，执行多次`lazySingleton = new LazySingleton();`  
-将导致实例化多次 lazySingleton。
+将导致实例化多次 lazySingleton。  
 
 ```java
 /**
@@ -112,9 +115,10 @@ public class LazySingleton {
 }
 ```
 #### Ⅱ 饿汉式-线程安全
-由于线程不安全的方式导致instance被实例化多次，采取直接实例化 uniqueInstance 的方式就不会产生线程不安全问题。
 
-但是直接实例化的方式(饿汉式)也丢失了延迟实例化带来的节约资源的好处。
+由于线程不安全的方式导致instance被实例化多次，采取直接实例化 uniqueInstance 的方式就不会产生线程不安全问题。  
+
+但是直接实例化的方式(饿汉式)也丢失了延迟实例化带来的节约资源的好处。  
 ```java
 /**
  * 单例模式-恶汉式
@@ -143,7 +147,9 @@ public class HungrySingleton implements Serializable,Cloneable{
     }
 }
 ```
+
 #### Ⅲ 懒汉式-线程安全
+
 ```java
 /**
  * 单例模式-懒汉式，注重延迟加载，只有使用该类的时候才进行初始化。
@@ -163,8 +169,11 @@ public class LazySingleton {
     }
 }
 ```
+
 #### Ⅳ 双重校验锁-线程安全
+
 双重校验先判断instance是否已经被实例化，如果没有被实例化，那么才对实例化语句进行加锁。
+
 ```java
 /**                                                                            
  * 单例模式-懒加载，双重检查机制                                                             
@@ -188,7 +197,9 @@ public class LazyDoubleCheckSingleton {
         return lazyDoubleCheckSingleton;                                       
     }                                                                  
 ```
+
 考虑下面的实现，也就是只使用了一个 if 语句。在 lazyDoubleCheckSingleton == null 的情况下，如果两个线程都执行了 if 语句，那么两个线程都会进入 if 语句块内。虽然在 if 语句块内有加锁操作，但是两个线程都会执行 `lazyDoubleCheckSingleton = new LazyDoubleCheckSingleton();` 这条语句，只是先后的问题，那么就会进行两次实例化。因此必须使用双重校验锁，也就是需要使用两个 if 语句。
+
 ```java
 synchronized (LazyDoubleCheckSingleton.class){                     
                 if(lazyDoubleCheckSingleton == null){                          
@@ -199,11 +210,11 @@ synchronized (LazyDoubleCheckSingleton.class){
                 }  
 ```
 lazyDoubleCheckSingleton 采用volatile关键字修饰也是很有必要的，`lazyDoubleCheckSingleton = new LazyDoubleCheckSingleton();`这段代码  
-分三步执行。
-1.为lazyDoubleCheckSingleton分配内存空间
-2.初始化 lazyDoubleCheckSingleton
-3.将lazyDoubleCheckSingleton指向分配的内存地址、
-但是由于 JVM 具有指令重排的特性，执行顺序有可能变成 1>3>2。指令重排在单线程环境下不会出先问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。例如，线程 T<sub>1</sub> 执行了 1 和 3，此时 T<sub>2</sub> 调用 getInstance() 后发现 lazyDoubleCheckSingleton 不为空，因此返回 lazyDoubleCheckSingleton，但此时 lazyDoubleCheckSingleton 还未被初始化。
+分三步执行。    
+1.为lazyDoubleCheckSingleton分配内存空间  
+2.初始化 lazyDoubleCheckSingleton  
+3.将lazyDoubleCheckSingleton指向分配的内存地址  
+但是由于 JVM 具有指令重排的特性，执行顺序有可能变成 1>3>2。指令重排在单线程环境下不会出先问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。例如，线程 T<sub>1</sub> 执行了 1 和 3，此时 T<sub>2</sub> 调用 getInstance() 后发现 lazyDoubleCheckSingleton 不为空，因此返回 lazyDoubleCheckSingleton，但此时 lazyDoubleCheckSingleton 还未被初始化。  
 
 使用 volatile 可以禁止 JVM 的指令重排，保证在多线程环境下也能正常运行。
 
