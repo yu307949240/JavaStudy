@@ -16,6 +16,4 @@ public abstract class CatalogComponent {
     public void print(){
         throw new UnsupportedOperationException("不支持打印操作");
     }
-
-
 }

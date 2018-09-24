@@ -1,12 +1,6 @@
 package com.yyq.DesignPattern.creational.simplefactory;
 
 public class VideoFactory {
-    /*public Video getVideo(String type){
-        if("Java".equalsIgnoreCase(type)){
-            return new JavaVideo();
-        }
-        return null;
-    }*/
     //用反射来实现简单工厂
     public Video getVideo(Class c){
         Video video = null;
