@@ -24,6 +24,8 @@ public class InsertSort<T extends Comparable<T>> extends Sort<T> {
             for (int j = i; j > 0 && less(arr[j], arr[j - 1]); j--) {
                 swap(arr, j, j - 1);
             }
+//            CommonUtils.print(arr);
+//            System.out.println();
         }
 
     }
@@ -34,7 +36,8 @@ public class InsertSort<T extends Comparable<T>> extends Sort<T> {
 
         arr = CommonUtils.generateRandomArr(10000, 1, 10000);
         CommonUtils.testSort("com.yyq.sort.SelectionSort",arr);
-
+//        Integer[] arr = {4, 3, 6, 2, 1, 9, 5, 8, 7};
+//        new InsertSort<Integer>().sort(arr);
 
     }
 }

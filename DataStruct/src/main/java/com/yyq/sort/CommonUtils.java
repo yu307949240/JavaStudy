@@ -18,6 +18,12 @@ public class CommonUtils {
 
     public static void print(Object[] arr) {
         for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + "\t");
+        }
+    }
+
+    public static void println(Object arr[]) {
+        for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i]);
         }
     }
@@ -38,17 +44,17 @@ public class CommonUtils {
         return resArr;
     }
 
-    public static void testSort(String  sortClassName, Comparable[] arr){
-        try{
-             Class sortClass = Class.forName(sortClassName);
-            Method sortMethod = sortClass.getMethod("sort",new Class[]{Comparable[].class});
-            Object[] params  = new Object[]{arr};
+    public static void testSort(String sortClassName, Comparable[] arr) {
+        try {
+            Class sortClass = Class.forName(sortClassName);
+            Method sortMethod = sortClass.getMethod("sort", new Class[]{Comparable[].class});
+            Object[] params = new Object[]{arr};
             long startTime = System.currentTimeMillis();
-            sortMethod.invoke(sortClass.newInstance(),params);
+            sortMethod.invoke(sortClass.newInstance(), params);
             long endTime = System.currentTimeMillis();
 
-            System.out.println(sortClass.getSimpleName()+": "+(endTime-startTime)+"ms");
-        }catch (Exception e){
+            System.out.println(sortClass.getSimpleName() + ": " + (endTime - startTime) + "ms");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -56,6 +62,6 @@ public class CommonUtils {
     public static void main(String[] args) {
         Integer arr[] = generateRandomArr(5, 1, 8);
         print(arr);
-       // CommonUtils.testSort();
+        // CommonUtils.testSort();
     }
 }
