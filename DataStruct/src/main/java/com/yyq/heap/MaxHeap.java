@@ -46,11 +46,11 @@ public class MaxHeap<T extends Comparable<T>> {
     }
 
     Object pop(){
-        Object item = data[1];
-        swap(data,1,count-1);
+        Object res = data[1];
+        swap(data,1,count);
         count--;
         shiftDown(1);
-        return item;
+        return res;
     }
 
     /**
