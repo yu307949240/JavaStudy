@@ -1,5 +1,5 @@
 # 排序
-## [排序算法总结]
+## 排序算法总结
 
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93.png" width="400" "/> </div><br> 
 
