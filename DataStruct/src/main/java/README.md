@@ -2,11 +2,53 @@
 ## [快速排序](DataStruct/src/main/java/com/yyq/sort/quickSort)
 
 ### 1.双路快排
-<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%8F%8C%E8%B7%AF%E5%BF%AB%E6%8E%92%E8%BF%87%E7%A8%8B.png" width="400" length="400"/> </div><br>  
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%8F%8C%E8%B7%AF%E5%BF%AB%E6%8E%92%E8%BF%87%E7%A8%8B.png" width="200" "/> </div><br>  
 
-<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%8F%8C%E8%B7%AF%E5%BF%AB%E6%8E%92.png" width="400" length="400"/> </div><br>  
+快速排序通过一个切分元素将数组分为两个子数组，左子数组小于等于切分元素，右子数组大于等于切分元素，将  这两个子数组排序也就将整个数组排序了。  
+
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%8F%8C%E8%B7%AF%E5%BF%AB%E6%8E%92.png" width="200"/> </div><br>  
+
+```java
+class QuickSort{
+    /**
+     * 双路快排
+     */
+    int partition2(Integer[] arr, int l, int r) {
+        Integer v = arr[l];
+
+        // arr[l+1...i] <= v ; arr[j...r] >= v
+        int i = l + 1, j = r;
+        while (true) {
+            while (i <= r && arr[i] < v) i++;
+            while (j >= l + 1 && arr[j] > v) j--;
+            if (i > j) break;
+            CommonUtils.swap(arr, i, j);
+            i++;
+            j--;
+        }
+        CommonUtils.swap(arr, l, j);
+        return j;
+    }
+
+    void quickSort2(Comparable[] arr, int l, int r) {
+        if (l >= r) {
+            return;
+        }
+        int p = partition2((Integer[]) arr, l, r);
+        quickSort2(arr, l, p - 1);
+        quickSort2(arr, p + 1, r);
+    }
+
+    void sort2(T[] arr) {
+        quickSort2(arr, 0, arr.length - 1);
+    }
+}
+```
+
+
 
 ## [堆排序](DataStruct/src/main/java/com/yyq/heap)
+
 ### 1.堆
 二叉堆是一棵完全二叉树，满足如下两个性质：
 (1)堆中某个节点的值不大于其父节点的值；  
