@@ -91,7 +91,9 @@ public class MaxHeap<T extends Comparable<T>> {
 ```
 
 ### 2.ShiftUp
-<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/ShiftUp.jpg" width="400"/> </div><br>  
+
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/ShiftUp.jpg" width="400"/> </div><br>
+
 ```java
 // 向堆中添加一个元素
     void push(T item){
@@ -112,7 +114,9 @@ public class MaxHeap<T extends Comparable<T>> {
 ```
 
 ### 3.ShiftDown
+
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/ShiftDown.jpg" width="400"/> </div><br>  
+
 ```java
 // 弹出堆顶元素，弹出之后向下浮动
 Object pop(){
