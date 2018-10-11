@@ -1,8 +1,9 @@
 # 排序
 ## [排序算法总结]
 
-## [快速排序](DataStruct/src/main/java/com/yyq/sort/quickSort)
-<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93.png" width="400" "/> </div><br>  
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93.png" width="400" "/> </div><br> 
+
+## [快速排序](DataStruct/src/main/java/com/yyq/sort/quickSort) 
 
 ### 1.双路快排
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%8F%8C%E8%B7%AF%E5%BF%AB%E6%8E%92%E8%BF%87%E7%A8%8B.png" width="200" "/> </div><br>  
