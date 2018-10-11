@@ -21,9 +21,16 @@ public class HeapSort {
         }
     }
 
+    public void heapify(Comparable[] arr,int n){
+        MaxHeap<Integer> maxHeap = new MaxHeap<Integer>((Integer[]) arr,n);
+        for (int j = 0; j < n; j++) {
+            System.out.println(maxHeap.pop());
+        }
+    }
+
     public static void main(String[] args) {
         Integer[] arr = CommonUtils.generateRandomArr(10,1,50);
-        new HeapSort().sort(arr);
+         new HeapSort().heapify(arr,10);
     }
 
 }
