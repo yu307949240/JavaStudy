@@ -10,7 +10,7 @@
 (2)二叉堆总是一棵完全二叉树（大顶堆）。  
 堆可以用数组来表示，这是因为堆是完全二叉树，而完全二叉树很容易就存储在数组中。位置 k 的节点的父节点   位置为 k/2，而它的两个子节点的位置分别为 2k 和 2k+1。这里不使用数组索引为 0 的位置，是为了更清晰地描述    节点的位置关系。   
 
-<div align="center"> <img src="/JavaStudy/pics/f3080f83-6239-459b-8e9c-03b6641f7815.png" width="200"/> </div><br>  
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/f3080f83-6239-459b-8e9c-03b6641f7815.png" width="200"/> </div><br>  
 
 ```java
 public class MaxHeap<T extends Comparable<T>> {
