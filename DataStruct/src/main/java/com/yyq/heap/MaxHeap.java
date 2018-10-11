@@ -21,6 +21,17 @@ public class MaxHeap<T extends Comparable<T>> {
         count = 0;
     }
 
+    public MaxHeap(T[] arr, int n) {
+        data = (T[]) new Comparable[n + 1];
+        for (int i = 0; i < n; i++) {
+            data[i + 1] = arr[i];
+        }
+        count = n;
+        for (int i = count / 2; i >= 1; i--) {
+            shiftDown(i);
+        }
+    }
+
     int size() {
         return count;
     }
@@ -36,6 +47,16 @@ public class MaxHeap<T extends Comparable<T>> {
         count++;
     }
 
+    Object pop() {
+        Object res = data[1];
+        swap(data, 1, count);
+        count--;
+        shiftDown(1);
+        return res;
+    }
+
+    // 最大堆核心辅助函数
+
     /**
      * Shift Up
      */
@@ -46,24 +67,11 @@ public class MaxHeap<T extends Comparable<T>> {
         }
     }
 
-    Object pop() {
-        Object res = data[1];
-        swap(data, 1, count);
-        count--;
-        shiftDown(1);
-        return res;
-    }
-
     /**
      * Shift Down
      */
     private void shiftDown(int index) {
         while (2 * index <= count) {
-//            if(data[index*2].compareTo(data[index*2+1])>0){
-//                swap(data,index,index*2);
-//            }else{
-//                swap(data,index,index*2+1);
-//            }
             // 确定index的索引！经典代码！！
             int j = 2 * index;
             if (j + 1 <= count && data[j + 1].compareTo(data[j]) > 0)
@@ -75,20 +83,5 @@ public class MaxHeap<T extends Comparable<T>> {
             index = j;
         }
     }
-
-    //==================================================================
-    public MaxHeap(T[] arr, int n) {
-        data = (T[]) new Comparable[n + 1];
-        for (int i = 0; i < n; i++) {
-            data[i + 1] = arr[i];
-        }
-        count = n;
-        for(int i=count/2;i>=1;i --){
-            shiftDown(i);
-        }
-    }
-
-
-
 
 }

@@ -3,7 +3,7 @@ package com.yyq.heap;
 import com.yyq.sort.CommonUtils;
 
 /**
- * 堆排序。
+ * 堆排序。时间复杂度为NlogN
  * @author yyq
  * @since 2018/10/10
  */

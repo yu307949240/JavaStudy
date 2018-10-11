@@ -1,8 +1,7 @@
 package com.yyq.sort;
 
 /**
- * 快排
- *
+ * 快排，双路快排，时间复杂度为NlogN，空间复杂度为logN
  * @author yyq
  * @since 18/09/28
  */
