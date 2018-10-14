@@ -1,9 +1,9 @@
-# 排序
+# 一.排序
 ## 排序算法总结
 
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93.png" width="400" "/> </div><br> 
 
-## [快速排序](DataStruct/src/main/java/com/yyq/sort/quickSort) 
+## [1.快速排序](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/src/main/java/com/yyq/sort/quickSort.java) 
 
 ### 1.双路快排
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%8F%8C%E8%B7%AF%E5%BF%AB%E6%8E%92%E8%BF%87%E7%A8%8B.png" width="200" "/> </div><br>  
@@ -51,9 +51,9 @@ class QuickSort{
 
 
 
-## [堆排序](DataStruct/src/main/java/com/yyq/heap)
+## [2.1堆排序](https://github.com/yu307949240/JavaStudy/tree/master/DataStruct/src/main/java/com/yyq/heap)
 
-### 1.堆
+### [1.堆](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/src/main/java/com/yyq/heap/MaxHeap.java)
 二叉堆是一棵完全二叉树，满足如下两个性质：
 
 * (1)堆中某个节点的值不大于其父节点的值；  
@@ -202,7 +202,7 @@ Object pop(){
     }
 ```
 
-### 4.堆排序(需要申请额外的空间)
+### [4.堆排序(需要申请额外的空间)](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/src/main/java/com/yyq/heap/HeapSort.java)
 
 ```java
 /**
@@ -242,7 +242,7 @@ public class HeapSort {
 }
 ```
 
-### 5.优化堆排序(不需要申请额外空间)
+### [5.优化堆排序(不需要申请额外空间)](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/src/main/java/com/yyq/heap/HeapSort2.java)
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/sort2.jpg" width="400" length="400"/> </div><br>  
 
 
@@ -287,7 +287,7 @@ public class HeapSort2<T extends Comparable<T>> {
 }
 ```
 
-# BST
+# [二.BST](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/src/main/java/com/yyq/bst/BST.java)
 
 BST树性质：
 
@@ -449,6 +449,7 @@ private void levelOrder(Node node) {
 ```
 
 ## 6.删除最大值节点或最小值节点
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%88%A0%E9%99%A4BST%E4%B8%AD%E6%9C%80%E5%A4%A7%E5%80%BC.png" width="300" "/> </div><br>  
 
 ```java
 void removeMin() {
@@ -489,6 +490,8 @@ private Node removeMax(Node node) {
 
 ## 7.删除任意一个节点
 
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%88%A0%E9%99%A4BST%E4%B8%AD%E4%BB%BB%E6%84%8F%E8%8A%82%E7%82%B9.png" width="300" "/> </div><br>  
+    
 ```java
     void remove(Key key) {
         root = remove(root, key);
