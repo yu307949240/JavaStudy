@@ -6,3 +6,4 @@
 ## [算法](/DataStruct/README.md)
 * [排序算法](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/README.md#%E4%B8%80%E6%8E%92%E5%BA%8F)
 * [BST](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/README.md#%E4%BA%8Cbst)
+* [字典树Trie](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/README.md#%E4%B8%89%E5%85%B6%E4%BB%96%E4%BA%8C%E5%8F%89%E6%A0%91)
