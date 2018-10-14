@@ -1,3 +1,15 @@
+* [一.排序](#一.排序)
+  * [排序算法总结](#排序算法总结)
+  * [1.快速排序](#1.快速排序)
+  * [2堆排序](#2堆排序)
+* [二.BST](#二.BST)
+  * [1.BST定义](#1.BST定义)
+  * [2.插入](#2.插入)
+  * [3.查找](#3.查找)
+  * [4.层次遍历(广度优先遍历)](#4.层次遍历(广度优先遍历))
+  * [5.寻找最大值与最小值](#5.寻找最大值与最小值)
+  * [6.删除最大值节点或最小值节点](#6.删除最大值节点或最小值节点)
+  * [7.删除任意一个节点](#7.删除任意一个节点)
 # 一.排序
 ## 排序算法总结
 
@@ -51,7 +63,7 @@ class QuickSort{
 
 
 
-## [2.1堆排序](https://github.com/yu307949240/JavaStudy/tree/master/DataStruct/src/main/java/com/yyq/heap)
+## [2堆排序](https://github.com/yu307949240/JavaStudy/tree/master/DataStruct/src/main/java/com/yyq/heap)
 
 ### [1.堆](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/src/main/java/com/yyq/heap/MaxHeap.java)
 二叉堆是一棵完全二叉树，满足如下两个性质：
