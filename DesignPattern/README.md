@@ -455,7 +455,7 @@ public class LazyDoubleCheckSingleton {
                     lazyDoubleCheckSingleton = new LazyDoubleCheckSingleton(); 
                     // 1.分配内存                                                  
                     // 2.初始化对象                                                 
-                    // 3.将指针指向内存空间                                             
+                    // 3.将lazyDoubleCheckSingleton指向内存空间                                             
                 }                                                              
             }                                                                  
         }                                                                      
@@ -471,7 +471,7 @@ synchronized (LazyDoubleCheckSingleton.class){
                     lazyDoubleCheckSingleton = new LazyDoubleCheckSingleton(); 
                     // 1.分配内存                                                  
                     // 2.初始化对象                                                 
-                    // 3.将指针指向内存空间                                             
+                    // 3.将lazyDoubleCheckSingleton指向内存空间                                             
                 }  
 ```
 lazyDoubleCheckSingleton 采用volatile关键字修饰也是很有必要的，`lazyDoubleCheckSingleton = new LazyDoubleCheckSingleton();`这段代码  

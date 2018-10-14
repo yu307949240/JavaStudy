@@ -1,8 +1,5 @@
 package com.yyq.DesignPattern.creational.singleton;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * 单例模式-懒汉式，注重延迟加载，只有使用该类的时候才进行初始化。

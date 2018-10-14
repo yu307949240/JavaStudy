@@ -14,7 +14,7 @@ public class Trie {
         public TrieNode() {
             path = 0;
             end = 0;
-            map = new TrieNode[26];
+            map = new TrieNode[26]; // 指向26个字母
         }
     }
 
