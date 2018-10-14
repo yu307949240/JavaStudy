@@ -10,7 +10,10 @@
   * [5.寻找最大值与最小值](#5寻找最大值与最小值)
   * [6.删除最大值节点或最小值节点](#6删除最大值节点或最小值节点)
   * [7.删除任意一个节点](#7删除任意一个节点)
+* [三.其他二叉树](#三其他二叉树)
+  * [1.字典树(Trie)](#1字典树trie)
 # 一.排序
+
 ## 排序算法总结
 
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93.png" width="400" "/> </div><br> 
@@ -503,7 +506,7 @@ private Node removeMax(Node node) {
 ## 7.删除任意一个节点
 
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%88%A0%E9%99%A4BST%E4%B8%AD%E4%BB%BB%E6%84%8F%E8%8A%82%E7%82%B9.png" width="300" "/> </div><br>  
-    
+
 ```java
     void remove(Key key) {
         root = remove(root, key);
@@ -547,4 +550,130 @@ private Node removeMax(Node node) {
         }
     }
 ```
+
+# 三.其他二叉树
+
+## 1.字典树(Trie)
+
+字典树属于不平衡二叉树，用于字符串的存储
+
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%AD%97%E5%85%B8%E6%A0%91%E5%AD%98%E5%82%A8%E5%AD%97%E7%AC%A6%E4%B8%B2.png" width="300" "/> </div><br>  
+
+字典树的性质如下：
+
+* 根节点没有字符路径。
+* 从根节点到某一节点，将路径上经过的字符串连接起来，为扫过的对应字符串
+* 每个节点向下所有字符路径上的字符都不同
+
+字典树节点定义
+
+```java
+public class TrieNode{
+    private int path;
+    private int count;
+    TrieNode[] map;
+    public TrieNode(){
+        path = 0;
+        count = 0;
+        map = new TrieNode[26];
+    }
+}
+```
+
+### 1.1 字典树实现
+
+```java
+/**
+ * 字典树实现字符串的存储
+ * @author yyq
+ * @since 2018/10/13
+ */
+public class Trie {
+    class TrieNode {
+        int path; // 有多少个word经过
+        int end; // 有多少个word以此节点结束
+        TrieNode[] map;
+
+        public TrieNode() {
+            path = 0;
+            end = 0;
+            map = new TrieNode[26]; // 指向26个字母
+        }
+    }
+
+    private TrieNode root;
+
+    public Trie() {
+        root = new TrieNode();
+    }
+}
+```
+
+### 1.2 字典树插入字符串
+
+```java
+ // 向字典树中插入一个word
+    public void insert(String word) {
+        if (word == null) {
+            return;
+        }
+        TrieNode node = root;
+        int index = 0;
+        char[] chs = word.toCharArray();
+        for (int i = 0; i < chs.length; i++) {
+            index = chs[i] - 'a';
+            if (node.map[index] == null) {
+                node.map[index] = new TrieNode();
+            }
+            node = node.map[index];
+            node.path++;
+        }
+        node.end++;
+    }
+```
+
+### 1.3 判断字典树是否包含字符串
+
+```java
+// 查找字典树中是否包含word
+    public boolean contain(String word) {
+        if (word == null) {
+            return false;
+        }
+        TrieNode node = root;
+        int index = 0;
+        char[] chs = word.toCharArray();
+        for (int i = 0; i < chs.length; i++) {
+            index = chs[i] - 'a';
+            if (node.map[index] == null) {
+                return false;
+            }
+            node = node.map[index];
+        }
+        return node.end != 0;
+    }
+```
+
+### 1.4 删除字典树中的字符串
+
+```java
+// 删除字典树中的word
+    public void delete(String word){
+        if(contain(word)) {
+            TrieNode node = root;
+            int index = 0;
+            char[] chs = word.toCharArray();
+            for (int i = 0; i < chs.length; i++) {
+                index = chs[i] - 'a';
+                if (node.map[index].path-- == 1) {
+                    node.map[index] = null;
+                }
+                node = node.map[index];
+            }
+            node.end--;
+        }
+    }
+```
+
+
 
