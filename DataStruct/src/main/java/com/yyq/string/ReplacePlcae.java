@@ -10,25 +10,25 @@ package com.yyq.string;
  * @since 2018/10/13
  */
 public class ReplacePlcae {
-    public static void replcaePlace(StringBuffer str) {
-        int p1 = str.length() - 1;
-        for (int i = 0; i <= p1; i++) {
-            if (str.charAt(i) == ' ') {
-                str.append("  ");
+        public static void replcaePlace(StringBuffer str) {
+            int p1 = str.length() - 1;
+            for (int i = 0; i <= p1; i++) {
+                if (str.charAt(i) == ' ') {
+                    str.append("  ");
+                }
+            }
+            int p2 = str.length() - 1;
+            while (p1 >= 0 && p2 > p1) {
+                char c = str.charAt(p1--);
+                if (c == ' ') {
+                    str.setCharAt(p2--, '%');
+                    str.setCharAt(p2--, '2');
+                    str.setCharAt(p2--, '0');
+                } else {
+                    str.setCharAt(p2--, c);
+                }
             }
         }
-        int p2 = str.length() - 1;
-        while (p1 >= 0 && p2 > p1) {
-            char c = str.charAt(p1--);
-            if (c == ' ') {
-                str.setCharAt(p2--, '%');
-                str.setCharAt(p2--, '2');
-                str.setCharAt(p2--, '0');
-            } else {
-                str.setCharAt(p2--, c);
-            }
-        }
-    }
 
     public static void main(String[] args) {
         StringBuffer str = new StringBuffer("we are happy");

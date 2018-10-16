@@ -23,7 +23,7 @@ public class LinkedListStack<E> implements Stack<E> {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder res = new StringBuilder();
         res.append("Stack: top ");
         res.append(linkedList);
@@ -32,13 +32,11 @@ public class LinkedListStack<E> implements Stack<E> {
 
     public static void main(String[] args) {
         LinkedListStack<Integer> stack = new LinkedListStack<Integer>();
-        for(int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
             stack.push(i);
             System.out.println(stack);
         }
-
         stack.pop();
         System.out.println(stack);
-
     }
 }
