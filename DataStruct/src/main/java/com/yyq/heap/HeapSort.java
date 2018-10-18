@@ -17,14 +17,14 @@ public class HeapSort {
         }
 
         for (int j = 0; j < n; j++) {
-            System.out.println(maxHeap.pop());
+            System.out.println(maxHeap.extractMax());
         }
     }
 
     public void heapify(Comparable[] arr,int n){
         MaxHeap<Integer> maxHeap = new MaxHeap<Integer>((Integer[]) arr,n);
         for (int j = 0; j < n; j++) {
-            System.out.println(maxHeap.pop());
+            System.out.println(maxHeap.extractMax());
         }
     }
 

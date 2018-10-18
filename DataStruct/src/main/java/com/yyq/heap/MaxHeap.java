@@ -41,18 +41,22 @@ public class MaxHeap<T extends Comparable<T>> {
     }
 
     // 向堆中添加一个元素
-    void push(T item) {
+    public void push(T item) {
         data[count + 1] = item;
         shiftUp(count + 1);
         count++;
     }
 
-    Object pop() {
+    public Object extractMax() {
         Object res = data[1];
         swap(data, 1, count);
         count--;
         shiftDown(1);
         return res;
+    }
+
+    public Object peek(){
+        return data[1];
     }
 
     // 最大堆核心辅助函数

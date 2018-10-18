@@ -18,6 +18,32 @@ public class LinkedListProblems {
     }
 
     /**
+     * 两个链表相加
+     * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+     * Output: 7 -> 0 -> 8
+     */
+    public Node addTwoNumbers(Node h1,Node h2){
+        Node h = new Node(0);
+        if(h1==null && h2==null)
+            return h;
+        int sum = 0,carry = 0;
+        Node cur = h;
+        while(h1!=null || h2!= null){
+            int num1 = h1 == null ? 0:h1.value;
+            int num2 = h2 == null ? 0:h2.value;
+            sum = num1 + num2 + carry;
+            cur.next = new Node(sum % 10);
+            cur = cur.next;
+            carry = sum / 10;
+            h1 = h1==null?null:h1.next;
+            h2 = h2==null?null:h2.next;
+        }
+        if(carry!=0)
+            cur.next = new Node(carry);
+        return h.next;
+    }
+
+    /**
      * 打印两个链表的公共部分
      */
     public void printCommonPart(Node h1, Node h2) {
