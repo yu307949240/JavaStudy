@@ -3,11 +3,8 @@
 ## 1.FIFO队列
 
 AQS是一个基于FIFO算法的队列。数据结构可以表示成如下：采用双向链表存储，包括head和tail结点。
-
-
-
-[img](https:////note.youdao.com/src/16CCFFCF78F840308761EA16FE39FB90)
-
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/AQS内部类节点.png" width="400" "/> </div><br>
+  
 ## 2.Node和ConditionObject内部类
 
 ### Node：
@@ -171,16 +168,14 @@ static final class Node {
 # 二.AQS类核心函数(模板方法模式)
 
 ## 1.acquire()：独占式的获取资源
-
-![img](https:////note.youdao.com/src/991DF16309AF4C69A24FCEEBD945EA0C)
-
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/AQS.acquire().png" width="400" "/> </div><br> 
 (1)执行tryAcquire()，试图去在独占模式下获取对象状态，需要子类重写此方法。
 
 (2)若tryAcquire失败，则把线程放入sync queue中。
 
 ## 2.release()：独占模式下释放资源
 
-​        和上述acquire分析类似，其中tryRelease()也是需要子类重写的。
+和上述acquire分析类似，其中tryRelease()也是需要子类重写的。
 
 3.acquireShared()：共享模式下获取资源
 
@@ -352,8 +347,7 @@ abstract static class Sync extends AbstractQueuedSynchronizer {
 ## 1.2 ReentrantReadWriteLock
 
 内部类：
-
-![img](https:////note.youdao.com/src/9EBD8D6D348041E4A8481292E15AF966)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/ReentrantReadWriteLock.png" width="400" "/> </div><br> 
 
 <https://www.cnblogs.com/leesf456/p/5419132.html>
 
@@ -366,9 +360,7 @@ abstract static class Sync extends AbstractQueuedSynchronizer {
 # 2.共享式
 
 ## 2.1 semaphore
-
-![img](https:////note.youdao.com/src/2FEA357061CF40E79A17A41651544C98)
-
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/semaphore.png" width="400" "/> </div><br> 
 <https://www.cnblogs.com/leesf456/p/5414778.html>
 
 ## 2.2 CountDownLatch
