@@ -8,12 +8,12 @@
   * [2.release()：独占模式下释放资源](#2release独占模式下释放资源)
 * [三.AQS应用案例](#三AQS应用案例)
   * [1.独占式](#1独占式)
-    * [1.1 ReentrantLock](#11-ReentrantLock)
-    * [1.2 ReentrantReadWriteLock](#12-ReentrantReadWriteLock)
-    * [1.3 ThreadPoolExecutor](#13-ThreadPoolExecutor)
+    * [1.1 ReentrantLock](#11-reentrantlock)
+    * [1.2 ReentrantReadWriteLock](#12-reentrantreadwritelock)
+    * [1.3 ThreadPoolExecutor](#13-threadpoolexecutor)
   * [2.共享式](#2共享式)
     * [2.1 semaphore](#21-semaphore)
-    * [2.2 CountDownLatch](#22-CountDownLatch)
+    * [2.2 CountDownLatch](#22-countdownlatch)
 # 一.AQS数据结构以及相关概念
 
 ## 1.FIFO队列
