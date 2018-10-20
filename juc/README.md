@@ -12,7 +12,7 @@
     * [1.2 ReentrantReadWriteLock](#12-reentrantreadwritelock)
     * [1.3 ThreadPoolExecutor](#13-threadpoolexecutor)
   * [2.共享式](#2共享式)
-    * [2.1 semaphore](#21-semaphore)
+    * [2.1 Semaphore](#21-semaphore)
     * [2.2 CountDownLatch](#22-countdownlatch)
 # 一.AQS数据结构以及相关概念
 
@@ -377,7 +377,7 @@ abstract static class Sync extends AbstractQueuedSynchronizer {
 
 # 2.共享式
 
-## 2.1 semaphore
+## 2.1 Semaphore
 https://www.cnblogs.com/leesf456/p/5414778.html
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/semaphore.png" width="400" "/> </div><br> 
 <https://www.cnblogs.com/leesf456/p/5414778.html>
