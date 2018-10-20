@@ -203,6 +203,8 @@ static final class Node {
 
 ### 1.1 ReentrantLock
 
+https://www.cnblogs.com/leesf456/p/5383609.html
+
 有一个静态内部类Sync实现AQS模板方法。ReentrantLock默认构造方法是非公平锁，可以使用构造函数ReentrantLock(true)设置为公平锁
 
 ```java
