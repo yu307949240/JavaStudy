@@ -675,5 +675,127 @@ public class Trie {
     }
 ```
 
+## 2.红黑树(RBtree)
+
+### 1.1特性
+
+红黑树是一种特殊的BST，是一种**平衡二叉树**满足下述五个性质
+
+* (1) 每个节点要么是红色要么是黑色；
+
+* (2) 根节点是黑色；
+* (3) 每个叶子节点，注意是空的叶子节点是黑色；
+* (4) 如果一个叶子节点是红色，那么它的叶子节点必须是黑色；
+* (5) 每一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。
+
+### 1.2红黑树数据结构定义
+
+Image
+
+```java
+/**
+ * 红黑树
+ *
+ * @author yyq
+ * @since 2018/10/21
+ */
+public class RBTree<T extends Comparable<T>> {
+
+    class RBTNode<T extends Comparable<T>> {
+        boolean color;
+        T k;
+        RBTNode<T> left, right, parent;
+
+        public RBTNode(T k, boolean color, RBTNode<T> left, RBTNode<T> right, RBTNode<T> parent) {
+            this.k = k;
+            this.color = color;
+            this.left = left;
+            this.right = right;
+            this.parent = parent;
+        }
+    }
+
+    private RBTNode<T> root;
+    private static final boolean RED = false;
+    private static final boolean BLACk = true;
+}
+
+```
+
+
+
+### 1.3左旋
+
+Image
+
+```java
+/**
+     * 对红黑树的节点(x)进行左旋转
+     * <p>
+     * 左旋示意图(对节点x进行左旋)：
+     *   px                              px
+     *   /                               /
+     *  x                               y
+     * /  \      --(左旋)-              / \
+     *lx   y                          x  ry
+     * /   \                         /  \
+     * ly   ry                      lx  ly
+     */
+    public void leftRotate(RBTNode<T> x) {
+        RBTNode<T> y = x.right;
+        x.right = y.left;
+        y.parent = x.parent;
+        if (x.parent == null) // 如果 “x的父亲” 是空节点，则将y设为根节点
+            root = y;
+        else {
+            if (x.parent.left == x)
+                x.parent.left = y; // 如果 x是它父节点的左孩子，则将y设为“x的父节点的左孩子”
+            else {
+                x.parent.right = y; //  如果 x是它父节点的左孩子，则将y设为“x的父节点的左孩子”
+            }
+        }
+        y.left = x;
+        x.parent = y;
+    }
+```
+
+
+
+###1.4右旋
+
+Image
+
+```java
+/**
+ * 对红黑树的节点(y)进行右旋转
+ * <p>
+ * 右旋示意图(对节点y进行左旋)：
+ *     py                               py
+ *     /                                /
+ *    y                                x
+ *   /  \      --(右旋)-               /  \
+ *  x   ry                           lx   y
+ * / \                                   / \
+ *lx  rx                               rx  ry
+ */
+
+public void rightRotate(RBTNode<T> y) {
+    RBTNode<T> x = y.left;
+    y.left = x.parent;
+    y.parent = x.parent;
+    if (x.parent == null)
+        root = x;
+    else {
+        if (y == y.parent.right)
+            y.parent.right = x;
+        else {
+            y.parent.left = x;
+        }
+    }
+    x.right = y;
+    y.parent = x;
+}
+```
+
 
 
