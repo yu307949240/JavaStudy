@@ -12,6 +12,8 @@
   * [7.删除任意一个节点](#7删除任意一个节点)
 * [三.其他二叉树](#三其他二叉树)
   * [1.字典树(Trie)](#1字典树trie)
+  * [2.红黑树(RBtree)](#2红黑树rbtree)
+     * []()
 # 一.排序
 
 ## 排序算法总结
@@ -677,7 +679,7 @@ public class Trie {
 
 ## 2.红黑树(RBtree)
 
-### 1.1特性
+### 2.1特性
 
 红黑树是一种特殊的BST，是一种**平衡二叉树**满足下述五个性质
 
@@ -688,9 +690,10 @@ public class Trie {
 * (4) 如果一个叶子节点是红色，那么它的叶子节点必须是黑色；
 * (5) 每一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。
 
-### 1.2红黑树数据结构定义
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E7%BA%A2%E9%BB%91%E6%A0%91.jpg" width="300" "/> </div><br>  
 
-Image
+
+### 2.2红黑树数据结构定义
 
 ```java
 /**
@@ -724,9 +727,9 @@ public class RBTree<T extends Comparable<T>> {
 
 
 
-### 1.3左旋
+### 2.3左旋
 
-Image
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B7%A6%E6%97%8B.jpg" width="300" "/> </div><br>  
 
 ```java
 /**
@@ -761,9 +764,9 @@ Image
 
 
 
-###1.4右旋
+### 2.4右旋
 
-Image
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%8F%B3%E6%97%8B.jpg" width="300" "/> </div><br>  
 
 ```java
 /**
