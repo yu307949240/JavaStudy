@@ -1,9 +1,7 @@
 package com.yyq.tree;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 二叉树
@@ -20,6 +18,81 @@ public class Tree {
             value = data;
             left = right = null;
         }
+    }
+
+    /**
+     * 非递归前序遍历二叉树
+     * 前序遍历为 root -> left -> right
+     */
+    public List<Integer> preOrder(Node r){
+        List<Integer> ret = new ArrayList<Integer>();
+        Stack<Node> stack = new Stack<Node>();
+        stack.push(r);
+        while(!stack.isEmpty()){
+            Node n = stack.pop();
+            if(n==null)
+                continue;
+            ret.add(n.value);
+            stack.push(n.right);
+            stack.push(n.left);
+        }
+        return ret;
+    }
+
+    /**
+     * 非递归后序遍历二叉树
+     * 后序遍历为 left -> right -> root。可以修改前序遍历成为 root -> right -> left，那么这个顺序就和后序遍历正好相反。
+     */
+    public List<Integer> postOrder(Node r){
+        List<Integer> ret = new ArrayList<Integer>();
+        Stack<Node> stack = new Stack<Node>();
+        stack.push(r);
+        while(!stack.isEmpty()){
+            Node n = stack.pop();
+            if(n==null)
+                continue;
+            ret.add(n.value);
+            stack.push(n.left);
+            stack.push(n.right);
+        }
+        Collections.reverse(ret);
+        return  ret;
+    }
+
+    /**
+     * 非递归中序遍历二叉树
+     */
+    public List<Integer> inOrder(Node r){
+        List<Integer> ret = new ArrayList<Integer>();
+        Stack<Node> stack = new Stack<Node>();
+        Node cur = r;
+        while(cur != null || !stack.isEmpty()){
+           while(cur!=null){
+               stack.push(cur);
+               cur = cur.left;
+           }
+           Node n = stack.pop();
+           ret.add(n.value);
+           stack.push(n.right);
+        }
+        return ret;
+    }
+
+    /**
+     * 二叉树的镜像
+     */
+    public void mirror(Node r){
+        if(r == null)
+            return;
+        swap(r);
+        mirror(r.left);
+        mirror(r.right);
+    }
+
+    public void swap(Node n){
+        Node tmp = n.left;
+        n.left = n.right;
+        n.right = tmp;
     }
 
     /**
