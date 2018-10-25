@@ -25,6 +25,7 @@ public class Tree {
      * 前序遍历为 root -> left -> right
      */
     public List<Integer> preOrder(Node r){
+        TreeSet<Integer> treeSet = new TreeSet<Integer>();
         List<Integer> ret = new ArrayList<Integer>();
         Stack<Node> stack = new Stack<Node>();
         stack.push(r);
@@ -76,6 +77,24 @@ public class Tree {
            stack.push(n.right);
         }
         return ret;
+    }
+    /**
+     * 树的子结构
+     */
+    public boolean HasSubtree(Node root1, Node root2) {
+        if (root1 == null || root2 == null)
+            return false;
+        return isSubtreeWithRoot(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
+    }
+
+    private boolean isSubtreeWithRoot(Node root1, Node root2) {
+        if (root2 == null)
+            return true;
+        if (root1 == null)
+            return false;
+        if (root1.value != root2.value)
+            return false;
+        return isSubtreeWithRoot(root1.left, root2.left) && isSubtreeWithRoot(root1.right, root2.right);
     }
 
     /**

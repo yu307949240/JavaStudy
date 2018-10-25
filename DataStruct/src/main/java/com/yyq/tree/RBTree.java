@@ -35,8 +35,8 @@ public class RBTree<T extends Comparable<T>> {
      *  x                               y
      * /  \      --(左旋)-              / \
      *lx   y                          x  ry
-     * /   \                         /  \
-     * ly   ry                      lx  ly
+     *   /   \                       / \
+     *   ly   ry                    lx ly
      */
     public void leftRotate(RBTNode<T> x) {
         RBTNode<T> y = x.right;

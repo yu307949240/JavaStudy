@@ -150,25 +150,25 @@ public class LinkedListProblems {
     }
 
     /**
-     * 合并k个有序链表
+     * 合并k个有序链表;lists表示k个链表的表头
      */
     public Node mergeKLists(Node[] lists) {
         if (lists == null || lists.length == 0)
             return null;
-        if(lists.length == 1)
+        if (lists.length == 1)
             return lists[0];
-        else if(lists.length == 2)
-            return merge(lists[0],lists[1]);
-        else{
+        else if (lists.length == 2)
+            return merge(lists[0], lists[1]);
+        else {
             int half = (lists.length & 1) == 0 ? lists.length / 2
                     : lists.length / 2 + 1;
             Node[] merged = new Node[half];
-            for(int i=0;i<half;i++){
-                if(lists.length - 1 - i != i){
-                    merged[i] = merge(lists[i],lists[lists.length-1-i]);
-                }else{
+            for (int i = 0; i < half; i++) {
+                if (lists.length - 1 - i != i) {
+                    merged[i] = merge(lists[i], lists[lists.length - 1 - i]);
+                } else {
                     merged[i] = lists[i];
-                 }
+                }
             }
             return mergeKLists(merged);
         }
@@ -265,6 +265,23 @@ public class LinkedListProblems {
                 pre = cur;
             }
             cur = cur.next;
+        }
+    }
+
+    /**
+     * 删除链表中重复节点
+     */
+    public Node delRepl(Node n) {
+        if (n == null || n.next == null)
+            return n;
+        Node next = n.next;
+        if (n.value == next.value) {
+            while (next != null && n.value == next.value)
+                next = next.next;
+            return delRepl(next);
+        } else {
+            n.next = delRepl(n.next);
+            return n;
         }
     }
 
