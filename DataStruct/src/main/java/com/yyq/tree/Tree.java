@@ -21,17 +21,36 @@ public class Tree {
     }
 
     /**
+     * 找到树中任意节点最大的距离
+     */
+    int max = 0;
+
+    public int longest(Node root) {
+        depth(root);
+        return max;
+    }
+
+    public int depth(Node root) {
+        if (root == null)
+            return 0;
+        int l = depth(root.left);
+        int r = depth(root.right);
+        max = Math.max(max, l + r);
+        return Math.max(l, r) + 1;
+    }
+
+    /**
      * 非递归前序遍历二叉树
      * 前序遍历为 root -> left -> right
      */
-    public List<Integer> preOrder(Node r){
+    public List<Integer> preOrder(Node r) {
         TreeSet<Integer> treeSet = new TreeSet<Integer>();
         List<Integer> ret = new ArrayList<Integer>();
         Stack<Node> stack = new Stack<Node>();
         stack.push(r);
-        while(!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             Node n = stack.pop();
-            if(n==null)
+            if (n == null)
                 continue;
             ret.add(n.value);
             stack.push(n.right);
@@ -44,40 +63,41 @@ public class Tree {
      * 非递归后序遍历二叉树
      * 后序遍历为 left -> right -> root。可以修改前序遍历成为 root -> right -> left，那么这个顺序就和后序遍历正好相反。
      */
-    public List<Integer> postOrder(Node r){
+    public List<Integer> postOrder(Node r) {
         List<Integer> ret = new ArrayList<Integer>();
         Stack<Node> stack = new Stack<Node>();
         stack.push(r);
-        while(!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             Node n = stack.pop();
-            if(n==null)
+            if (n == null)
                 continue;
             ret.add(n.value);
             stack.push(n.left);
             stack.push(n.right);
         }
         Collections.reverse(ret);
-        return  ret;
+        return ret;
     }
 
     /**
      * 非递归中序遍历二叉树
      */
-    public List<Integer> inOrder(Node r){
+    public List<Integer> inOrder(Node r) {
         List<Integer> ret = new ArrayList<Integer>();
         Stack<Node> stack = new Stack<Node>();
         Node cur = r;
-        while(cur != null || !stack.isEmpty()){
-           while(cur!=null){
-               stack.push(cur);
-               cur = cur.left;
-           }
-           Node n = stack.pop();
-           ret.add(n.value);
-           stack.push(n.right);
+        while (cur != null || !stack.isEmpty()) {
+            while (cur != null) {
+                stack.push(cur);
+                cur = cur.left;
+            }
+            Node n = stack.pop();
+            ret.add(n.value);
+            stack.push(n.right);
         }
         return ret;
     }
+
     /**
      * 树的子结构
      */
@@ -100,15 +120,15 @@ public class Tree {
     /**
      * 二叉树的镜像
      */
-    public void mirror(Node r){
-        if(r == null)
+    public void mirror(Node r) {
+        if (r == null)
             return;
         swap(r);
         mirror(r.left);
         mirror(r.right);
     }
 
-    public void swap(Node n){
+    public void swap(Node n) {
         Node tmp = n.left;
         n.left = n.right;
         n.right = tmp;
@@ -252,14 +272,20 @@ public class Tree {
             return n;
         Node left = lowestCommonAncestor(n.left, p, q);
         Node right = lowestCommonAncestor(n.right, p, q);
-        return left == null ? right : right == null ? left : n;
+        if (left != null && right != null)
+            return n;
+        return left != null ? left : right;
     }
 
     /**
      * 二叉树深度
      */
     public int TreeDepth(Node root) {
-        return root == null ? 0 : 1 + Math.max(TreeDepth(root.left), TreeDepth(root.right));
+        if (root == null)
+            return 0;
+        int left = TreeDepth(root.left);
+        int right = TreeDepth(root.right);
+        return 1 + Math.max(left, right);
     }
 
     /**
