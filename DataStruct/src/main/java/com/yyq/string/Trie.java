@@ -2,6 +2,7 @@ package com.yyq.string;
 
 /**
  * 字典树实现字符串的存储
+ *
  * @author yyq
  * @since 2018/10/13
  */
@@ -62,8 +63,8 @@ public class Trie {
     }
 
     // 删除字典树中的word
-    public void delete(String word){
-        if(contain(word)) {
+    public void delete(String word) {
+        if (contain(word)) {
             TrieNode node = root;
             int index = 0;
             char[] chs = word.toCharArray();

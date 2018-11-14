@@ -40,6 +40,51 @@ public class Tree {
     }
 
     /**
+     * 二叉树深度
+     */
+    public int TreeDepth(Node root) {
+        if (root == null)
+            return 0;
+        int left = TreeDepth(root.left);
+        int right = TreeDepth(root.right);
+        return Math.max(left, right) + 1;
+    }
+
+    /**
+     * 判断二叉树是否是平衡二叉树
+     */
+    public boolean isBalanced = true;
+
+    public boolean isBalanced(Node root) {
+        height(root);
+        return isBalanced;
+    }
+
+    public int height(Node n) {
+        if (n == null || !isBalanced)
+            return 0;
+        int left = height(n.left);
+        int right = height(n.right);
+        if (Math.abs(left - right) > 1)
+            isBalanced = false;
+        return 1 + Math.max(left, right);
+    }
+
+    /**
+     * 找出普通二叉树中两个节点的公共祖先节点
+     * 在左右子树中查找是否存在 p 或者 q，如果 p 和 q 分别在两个子树中，那么就说明根节点就是最低公共祖先。
+     */
+    public Node lowestCommonAncestor(Node n, Node p, Node q) {
+        if (n == null || p == null || q == null)
+            return n;
+        Node left = lowestCommonAncestor(n.left, p, q);
+        Node right = lowestCommonAncestor(n.right, p, q);
+        if (left != null && right != null)
+            return n;
+        return left != null ? left : right;
+    }
+
+    /**
      * 非递归前序遍历二叉树
      * 前序遍历为 root -> left -> right
      */
@@ -101,10 +146,10 @@ public class Tree {
     /**
      * 树的子结构
      */
-    public boolean HasSubtree(Node root1, Node root2) {
+    public boolean hasSubtree(Node root1, Node root2) {
         if (root1 == null || root2 == null)
             return false;
-        return isSubtreeWithRoot(root1, root2) || HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
+        return isSubtreeWithRoot(root1, root2) || hasSubtree(root1.left, root2) || hasSubtree(root1.right, root2);
     }
 
     private boolean isSubtreeWithRoot(Node root1, Node root2) {
@@ -116,6 +161,26 @@ public class Tree {
             return false;
         return isSubtreeWithRoot(root1.left, root2.left) && isSubtreeWithRoot(root1.right, root2.right);
     }
+
+    /**
+     * 判断一棵树是否为对称二叉树
+     */
+    public boolean isSymmic(Node r){
+        if(r == null)
+            return true;
+        return isSymmic(r.left,r.right);
+    }
+
+    private boolean isSymmic(Node r1,Node r2){
+        if(r1==null&&r2==null)
+            return true;
+        if(r1==null||r2==null)
+            return false;
+        if(r1.value!=r2.value)
+            return false;
+        return isSymmic(r1.left,r2.right) && isSymmic(r1.right,r2.left);
+    }
+
 
     /**
      * 二叉树的镜像
@@ -187,14 +252,14 @@ public class Tree {
                 TreeLinkNode parent = n.next;
                 while (parent.left == n)
                     return parent;
-                parent = parent.next;
+                n = n.next;
             }
         }
         return null;
     }
 
     /**
-     * 找到二叉树中和为某一值的路径
+     * 找到二叉树中和为某一值的路径，回溯法
      */
     private ArrayList<ArrayList<Integer>> ret = new ArrayList<ArrayList<Integer>>();
 
@@ -263,50 +328,6 @@ public class Tree {
         return n;
     }
 
-    /**
-     * 找出普通二叉树中两个节点的公共祖先节点
-     * 在左右子树中查找是否存在 p 或者 q，如果 p 和 q 分别在两个子树中，那么就说明根节点就是最低公共祖先。
-     */
-    public Node lowestCommonAncestor(Node n, Node p, Node q) {
-        if (n == null || p == null || q == null)
-            return n;
-        Node left = lowestCommonAncestor(n.left, p, q);
-        Node right = lowestCommonAncestor(n.right, p, q);
-        if (left != null && right != null)
-            return n;
-        return left != null ? left : right;
-    }
-
-    /**
-     * 二叉树深度
-     */
-    public int TreeDepth(Node root) {
-        if (root == null)
-            return 0;
-        int left = TreeDepth(root.left);
-        int right = TreeDepth(root.right);
-        return 1 + Math.max(left, right);
-    }
-
-    /**
-     * 判断二叉树是否是平衡二叉树
-     */
-    public boolean isBalanced = true;
-
-    public boolean isBalanced(Node root) {
-        height(root);
-        return isBalanced;
-    }
-
-    public int height(Node n) {
-        if (n == null || !isBalanced)
-            return 0;
-        int left = height(n.left);
-        int right = height(n.right);
-        if (Math.abs(left - right) > 1)
-            isBalanced = false;
-        return 1 + Math.max(left, right);
-    }
 
     public static void main(String[] args) {
         Node node = new Node(10);

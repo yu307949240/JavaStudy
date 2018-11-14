@@ -43,8 +43,8 @@ public class MaxHeap<T extends Comparable<T>> {
     // 向堆中添加一个元素
     public void push(T item) {
         data[count + 1] = item;
-        shiftUp(count + 1);
         count++;
+        shiftUp(count);
     }
 
     public Object extractMax() {

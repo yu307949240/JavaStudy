@@ -249,6 +249,18 @@ public class LinkedListProblems {
         return cur1;
     }
 
+    public Node firstCommon2(Node h1, Node h2) {
+        if (h1 == null || h2 == null)
+            return null;
+        Node l1 = h1, l2 = h2;
+        while (l1 != l2) {
+            l1 = l1 == null ? h2 : l1.next;
+            l2 = l2 == null ? h1 : l2.next;
+        }
+        return l1;
+    }
+
+
     /**
      * 删除无序链表中的重复元素。利用set进行过滤
      */
@@ -324,7 +336,7 @@ public class LinkedListProblems {
             RandomNode clone = new RandomNode(cur.label);
             clone.next = cur.next;
             cur.next = clone;
-            clone = clone.next;
+            cur = clone.next;
         }
 
         // 建立random连接
