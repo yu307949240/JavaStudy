@@ -5,6 +5,7 @@
  <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.01.06.png" width="300" "/> </div><br>
  
   **ziplist**：
+  
   组成结构如下图所示：
   <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.47.26.png" width="300" "/> </div><br>
