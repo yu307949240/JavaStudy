@@ -14,6 +14,7 @@
 ​    *entry*：具体节点；*zlend*：列表结尾。
 
  **intset**：
+ 
  当使用set数据类型时**并且元素个数小于设置的set-max-intset-entries(默认512个)采用intset实现**。typedef struct inset{//编码方式 uint32_t encoding; //集合包含的元素个数 uint_32 length; //保存元素的数组 int8_t contents[]} intset;
 
   **skiplist**：
