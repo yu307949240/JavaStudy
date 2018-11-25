@@ -1,21 +1,23 @@
 # 1.Redis总结
 
 ## 1.1基本数据类型以及低层实现
-
-![image-20181124191550186](/Users/yuyouquan/Library/Application%20Support/typora-user-images/image-20181124191550186.png)
-
-![image-20181124191622997](/Users/yuyouquan/Library/Application%20Support/typora-user-images/image-20181124191622997.png)
-
-  **ziplist**：组成结构如下图所示：![屏幕快照 2018-11-24 18.47.26](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.47.26.png)
-
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.00.56.png" width="300" "/> </div><br>
+ <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.01.06.png" width="300" "/> </div><br>
+  **ziplist**：
+  组成结构如下图所示：
+  <div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.47.26.png" width="300" "/> </div><br>
+  
 ​    *zlbytes*：整个压缩列表占用字节长度；*zltail*：距离尾节点的偏移量；*zllen*：记录列表节点的数量；
 
 ​    *entry*：具体节点；*zlend*：列表结尾。
 
  **intset**：当使用set数据类型时**并且元素个数小于设置的set-max-intset-entries(默认512个)采用intset实现**。typedef struct inset{//编码方式 uint32_t encoding; //集合包含的元素个数 uint_32 length; //保存元素的数组 int8_t contents[]} intset;
 
-  **skiplist**：![屏幕快照 2018-11-24 19.06.59](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.06.59.png)
-
+  **skiplist**：
+  <div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.06.59.png" width="300" "/> </div><br>
+ 
 Typedef struct **zskiplist**{//表头节点和表尾节点 structz skiplistNode *header,*tail; //表中节点的数量 unsigned long length; //表中层数 int level;} zskiplist;
 
 typedef struct **zskiplistNode**{
@@ -39,9 +41,9 @@ double score; //分值
 ## 1.2 字典
 
 ### 1.2.1 字典底层实现
-
-![屏幕快照 2018-11-24 19.24.15](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.24.15.png)
-
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.24.15.png" width="300" "/> </div><br>
+ 
 typedef struct **dictht**{
 
 dictEntry **table; // 哈希表数组
@@ -73,7 +75,8 @@ struct dictEntry *next;
 
 }dictEntry;
 
-![屏幕快照 2018-11-24 19.28.21](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.28.21.png)
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.28.21.png" width="300" "/> </div><br>
 
 ### 1.2.2 rehash
 
@@ -85,11 +88,11 @@ struct dictEntry *next;
 
 **3）当节点全部迁移到ht[1]中之后，ht[0]与ht[1]角色进行交换。**
 
-
-
-![屏幕快照 2018-11-24 19.32.08](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.32.08.png)
-
-![屏幕快照 2018-11-24 19.32.34](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.32.34.png)
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.32.08.png" width="300" "/> </div><br>
+ 
+ <div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.32.34.png" width="300" "/> </div><br>
 
 ### 1.2.3 渐进式rehash
 
@@ -113,9 +116,8 @@ struct dictEntry *next;
 
 惰性删除：当get一个key时，首先检查这个key是否过期，如果过期则删除，显然整个是对cpu友好的，但是是对内存不友好的。
 
-
-
-![屏幕快照 2018-11-24 20.07.31](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2020.07.31.png)
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2020.07.31.png" width="300" "/> </div><br>
 
 ### 1.3.3定期删除
 
@@ -134,22 +136,22 @@ RDB持久化是把当前进程数据生成快照保存到硬盘的过程。RDB�
 手动触发分为save和bgsave。save会阻塞当前Redis服务器，直到完成为止；bgsave会执行fork创建子进程来持久化，完成后自动结束。阻塞只发生在fork阶段，一般时间很短。
 
 自动触发是save m n 表示m秒内数据集中n次修改，自动触发bgsave。
-
-![屏幕快照 2018-11-24 20.39.56](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2020.39.56.png)
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2020.39.56.png" width="300" "/> </div><br>
 
 ### 1.4.2AOF持久化
 
 Redis的AOF持久化是通过追加写命令来实现持久化，默认设置appendonly no 表示默认不开启AOF功能，AOF工作流程操作：命令的写入(append)；文件同步(sync)；文件重写(rewrite)；重启加载(load)。
-
-![屏幕快照 2018-11-25 16.33.46](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-25%2016.33.46.png)
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-25%2016.33.46.png" width="300" "/> </div><br>
 
 **1）命令写入**
 
 将set或get命令直接写入AOF缓冲区
 
 **2）文件同步**
-
-![屏幕快照 2018-11-25 16.35.41](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-25%2016.35.41.png)
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-25%2016.35.41.png" width="300" "/> </div><br>
 
 **3）重写机制**
 
@@ -158,10 +160,10 @@ Redis的AOF持久化是通过追加写命令来实现持久化，默认设置app
 **手动触发**：直接执行bgrewriteaof
 
 **自动触发**：根据auto-aof-rewrite-min-size（AOF重写文件最小体积）和auto-aof-rewrite-percentage（当前AOF文件空间和上次重写AOF文件空间比值）
-
-![屏幕快照 2018-11-25 16.48.51](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-25%2016.48.51.png)
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-25%2016.48.51.png" width="300" "/> </div><br>
 
 **4）重启加载**
-
-![屏幕快照 2018-11-24 20.40.32](/Users/yuyouquan/Desktop/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2020.40.32.png)
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2020.40.32.png" width="300" "/> </div><br>
 
