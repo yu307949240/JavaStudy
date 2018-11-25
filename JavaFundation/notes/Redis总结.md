@@ -3,6 +3,7 @@
 ## 1.1基本数据类型以及低层实现
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.00.56.png" width="300" "/> </div><br>
  <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.01.06.png" width="300" "/> </div><br>
+ 
   **ziplist**：
   组成结构如下图所示：
   <div align="center"> <img 
@@ -12,9 +13,11 @@
 
 ​    *entry*：具体节点；*zlend*：列表结尾。
 
- **intset**：当使用set数据类型时**并且元素个数小于设置的set-max-intset-entries(默认512个)采用intset实现**。typedef struct inset{//编码方式 uint32_t encoding; //集合包含的元素个数 uint_32 length; //保存元素的数组 int8_t contents[]} intset;
+ **intset**：
+ 当使用set数据类型时**并且元素个数小于设置的set-max-intset-entries(默认512个)采用intset实现**。typedef struct inset{//编码方式 uint32_t encoding; //集合包含的元素个数 uint_32 length; //保存元素的数组 int8_t contents[]} intset;
 
   **skiplist**：
+  
   <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.06.59.png" width="300" "/> </div><br>
  
