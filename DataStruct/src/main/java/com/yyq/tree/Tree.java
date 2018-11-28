@@ -40,6 +40,20 @@ public class Tree {
     }
 
     /**
+     * 找出普通二叉树中两个节点的公共祖先节点
+     * 在左右子树中查找是否存在 p 或者 q，如果 p 和 q 分别在两个子树中，那么就说明根节点就是最低公共祖先。
+     */
+    public Node lowestCommonAncestor(Node n, Node p, Node q) {
+        if (n == null || p == null || q == null)
+            return n;
+        Node left = lowestCommonAncestor(n.left, p, q);
+        Node right = lowestCommonAncestor(n.right, p, q);
+        if (left != null && right != null)
+            return n;
+        return left != null ? left : right;
+    }
+
+    /**
      * 二叉树深度
      */
     public int TreeDepth(Node root) {
@@ -68,20 +82,6 @@ public class Tree {
         if (Math.abs(left - right) > 1)
             isBalanced = false;
         return 1 + Math.max(left, right);
-    }
-
-    /**
-     * 找出普通二叉树中两个节点的公共祖先节点
-     * 在左右子树中查找是否存在 p 或者 q，如果 p 和 q 分别在两个子树中，那么就说明根节点就是最低公共祖先。
-     */
-    public Node lowestCommonAncestor(Node n, Node p, Node q) {
-        if (n == null || p == null || q == null)
-            return n;
-        Node left = lowestCommonAncestor(n.left, p, q);
-        Node right = lowestCommonAncestor(n.right, p, q);
-        if (left != null && right != null)
-            return n;
-        return left != null ? left : right;
     }
 
     /**
