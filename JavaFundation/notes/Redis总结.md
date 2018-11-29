@@ -109,7 +109,7 @@ struct dictEntry *next;
 
 **3）当ht[0]键值对全部rehash到ht[1]上之后，将rehashid设为-1，表示rehash操作已经完成。**
 
-​       **当执行渐进式rehash时，字典会同时使用ht[0]和ht[1]两个hash表，所以同时会在两个rud操作，但是执行c操作会在ht[1]中执行，保证ht[0]元素个数只增不减。**
+​       **当执行渐进式rehash时，字典会同时使用ht[0]和ht[1]两个hash表，所以同时会在两个rud操作，但是执行c操作会在ht[1]中执行，保证ht[0]元素个数只减不增。**
 
 ## 1.3 Redis过期清理策略
 
