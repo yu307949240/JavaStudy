@@ -3,26 +3,27 @@
 ## 1.1基本数据类型以及低层实现
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.00.56.png" width="300" "/> </div><br>
  <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.01.06.png" width="300" "/> </div><br>
- 
+
   **ziplist**：
-  
+
   组成结构如下图所示：
   <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2018.47.26.png" width="300" "/> </div><br>
-  
+
 ​    *zlbytes*：整个压缩列表占用字节长度；*zltail*：距离尾节点的偏移量；*zllen*：记录列表节点的数量；
 
 ​    *entry*：具体节点；*zlend*：列表结尾。
 
  **intset**：
- 
+
  当使用set数据类型时**并且元素个数小于设置的set-max-intset-entries(默认512个)采用intset实现**。typedef struct inset{//编码方式 uint32_t encoding; //集合包含的元素个数 uint_32 length; //保存元素的数组 int8_t contents[]} intset;
 
   **skiplist**：
-  
+
   <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.06.59.png" width="300" "/> </div><br>
- 
+**跳表需要额外申请内存，以时间换空间。空间复杂度为O(N)级别。**
+
 Typedef struct **zskiplist**{//表头节点和表尾节点 structz skiplistNode *header,*tail; //表中节点的数量 unsigned long length; //表中层数 int level;} zskiplist;
 
 typedef struct **zskiplistNode**{
@@ -35,7 +36,7 @@ typedef struct **zskiplistNode**{
 
 }level[];
 
-struct zskiplistNode *backward;//后退指针
+struct zskiplistNode {*backward;//后退指针
 
 double score; //分值
 
@@ -43,12 +44,16 @@ double score; //分值
 
 }zskiplistNode;
 
+**Redis为什么一定要用跳表来实现有序集合而不用红黑树呢？**
+
+​       跳表可以支持快速的插入、删除、查找操作写起来简单，甚至也可以代替红黑树。Redis中有序集合支持核心操作包括插入、删除、查找、按照区间查找、迭代输出有序序列。其中插入、删除、查找、迭代输出有序序列红黑树也能完成，**但是按照区间查找操作，红黑树的效率就没有那么高了。对于按照区间查找数据这个操作，跳表可以做到 O(logn) 的时间复杂度定位区间的起点，然后在原始链表中顺序往后遍历就可以了。**还有其他原因就是跳表实现起来简单，RBTree实现麻烦。
+
 ## 1.2 字典
 
 ### 1.2.1 字典底层实现
 <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.24.15.png" width="300" "/> </div><br>
- 
+
 typedef struct **dictht**{
 
 dictEntry **table; // 哈希表数组
@@ -95,7 +100,7 @@ struct dictEntry *next;
 
 <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.32.08.png" width="300" "/> </div><br>
- 
+
  <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2019.32.34.png" width="300" "/> </div><br>
 
