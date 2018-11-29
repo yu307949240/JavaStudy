@@ -8,7 +8,7 @@
 
 InnoDB使用的索引是b+树索引
 
-![屏幕快照 2018-11-27 20.23.01](/Users/yuyouquan/Desktop/屏幕快照 2018-11-27 20.23.01.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-27%2020.23.01.png" width="400" "/> </div><br> 
 
 索引类型分为主键索引和非主键索引。
 
@@ -52,11 +52,11 @@ select * from tuser where name like '张 %' and age=10 and ismale=1;
 
 * 无索引下推查询过程：
 
-![屏幕快照 2018-11-27 20.49.57](/Users/yuyouquan/Desktop/屏幕快照 2018-11-27 20.49.57.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-27%2020.49.57%202.png" width="400" "/> </div><br> 
 
 * 索引下推执行过程：
 
-![屏幕快照 2018-11-27 20.50.06](/Users/yuyouquan/Desktop/屏幕快照 2018-11-27 20.50.06.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-27%2020.50.06.png" width="400" "/> </div><br> 
 
 ### 1.6聚簇索引和非聚簇索引
 
@@ -65,8 +65,8 @@ select * from tuser where name like '张 %' and age=10 and ismale=1;
 ​        InnoDB使用的是**聚簇索引**，将主键组织到一棵B+树中，而行数据就储存在叶子节点上，若使用"where id = 14"这样的条件查找主键，则按照B+树的检索算法即可查找到对应的叶节点，之后获得行数据。若对Name列进行条件搜索，则需要两个步骤：第一步在辅助索引B+树中检索Name，到达其叶子节点获取对应的主键。第二步使用主键在主索引B+树种再执行一次B+树检索操作，最终到达叶子节点即可获取整行数据。
 
 　　MyISM使用的是**非聚簇索引**，非聚簇索引的两棵B+树看上去没什么不同，节点的结构完全一致只是存储的内容不同而已，主键索引B+树的节点存储了主键，辅助键索引B+树存储了辅助键。表数据存储在独立的地方，这两颗B+树的叶子节点都使用一个地址指向真正的表数据，对于表数据来说，这两个键没有任何差别。由于索引树是独立的，通过辅助键检索无需访问主键的索引树。
-
-![屏幕快照 2018-11-27 20.55.50](/Users/yuyouquan/Desktop/屏幕快照 2018-11-27 20.55.50.png)
+  
+  <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-27%2020.55.50.png" width="400" "/> </div><br> 
 
 ### 1.7 索引失效的场景
 
