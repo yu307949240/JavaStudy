@@ -159,8 +159,8 @@ SELECT * FROM emp WHERE empid > 100 FOR UPDATE
 
 ​       提到事务肯定会想到事务到ACID，其中多个事务同时执行，就可能出脏读、不可重复读、幻读的问题。为了解决这些问题，就有了**事务隔离级别**的概念。事务隔离级别包括：读未提交(read-uncommitted)、读提交(read-committed)、可重复读(repeatable-read)、可串行化(serializable)。
 
-![屏幕快照 2018-11-30 10.47.49](/Users/yuyouquan/Desktop/屏幕快照 2018-11-30 10.47.49.png)
-
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2010.47.49.png" width="400" "/> </div><br> 
+  
 - 读未提交是指，一个事务还没提交时，它做的变更就能被别的事务看到；**<font color="#FF0000">V1、V2、V3值都是2</font>**
 - 读提交是指，一个事务提交之后，它做的变更就能被别的事务看到；**<font color="#FF0000">V1是1、V2、V3是2</font>**
 - 可重复读是，一个事务执行过程中看到的数据，总是跟这个事务在启动时看到的数据是一致的。当然在可重复读隔离级别下，未提交变更对其他事务也是不可见的；**<font color="#FF0000">V1、V2是1，V3是2</font>**
@@ -175,11 +175,9 @@ SELECT * FROM emp WHERE empid > 100 FOR UPDATE
 - <font color="#FF0000">set autocommit=0;</font>**，该命令会把这个线程的**自动提交关掉。这样只要执行一个select语句，事务就启动，并不会自动提交，直到主动执行commit或rollback或断开连接。   
 - 默认的<font color="#FF0000">set autocommit=1;</font>，可以使用**begin/start transaction**开启事务， 执行**<font color="#FF0000">commit work and chain;</font>**则提交事务并自动启动下一个事务。
 
-​    
-
 ### 3.2 事务隔离的实现(可重复读的场景下)
 
-![屏幕快照 2018-11-30 11.24.29](/Users/yuyouquan/Desktop/屏幕快照 2018-11-30 11.24.29.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2011.24.29.png" width="400" "/> </div><br> 
 
 **<font color="#FF0000">MVCC：</font>**
 
@@ -219,11 +217,11 @@ InnoDB利用“MVCC”，实现了秒级别创建快照的能力。
 
 3.三个事务开始前，(1,1)这一行的数据row trx_id = 99；这样A、B、C三个事务的up_limit_id都是99。
 
-![屏幕快照 2018-11-30 14.17.55](/Users/yuyouquan/Desktop/屏幕快照 2018-11-30 14.17.55.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2014.17.55.png" width="400" "/> </div><br> 
 
-![屏幕快照 2018-11-30 11.44.32](/Users/yuyouquan/Desktop/屏幕快照 2018-11-30 11.44.32.png)
-
-![屏幕快照 2018-11-30 14.08.21](/Users/yuyouquan/Desktop/屏幕快照 2018-11-30 14.08.21.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2011.44.32.png" width="400" "/> </div><br> 
+  
+  <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2014.08.21.png" width="400" "/> </div><br> 
 
 这里Q1查询到的值为3，Q2查询到的值为1；
 
