@@ -130,11 +130,23 @@ InnoDB实现了以下两种方式的行锁：
 ​       InnoDB行锁是通过索引上的索引项来实现的，这就意味着：**只有通过索引来检索数据，InnoDB才会使用行级锁，否则是否表锁！**
     行锁包括**共享锁(S)和排他锁(X)**
 
-### 2.4 间隙锁(Next-Key锁)
-
-​       当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙(GAP)”，InnoDB也会对这个“间隙”加锁，这种锁机制不是所谓的间隙锁（Next-Key锁）。
-
-​      举例来说，假如emp表中只有101条记录，其empid的值分别是1,2,...,100,101，下面的SQL：
+### 2.4 Next-Key Locks
+   在介绍临建锁之前先介绍下记录锁(Record Locks)、间隙锁(Gap Locks)、临建锁(Next-Key Locks)。
+   * **记录锁(Record Locks)**    
+   封锁索引记录，例如：
+   ```sql
+   select * from t where id = 1 for update; ## id为索引
+   ```
+   会在id=1上加锁，以阻止其他事务插入、更新、删除id=1这行。
+   * **间隙锁(Gap Locks)**  
+     封锁索引记录中的间隔
+   ```sql
+   select * from t where id between 8 and 15 
+   ```
+   * **临建锁(Next-Key Locks)**  
+   是**记录锁和间隙锁**的组合，用来解决“幻读”的问题，如下所述：  
+​  当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙(GAP)”，InnoDB也会对这个“间隙”加锁。  
+   举例来说，假如emp表中只有101条记录，其empid的值分别是1,2,...,100,101，下面的SQL：
 
 ```sql
 SELECT * FROM emp WHERE empid > 100 FOR UPDATE
