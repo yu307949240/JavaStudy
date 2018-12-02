@@ -220,8 +220,6 @@ InnoDB利用“MVCC”，实现了秒级别创建快照的能力。
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2014.17.55.png" width="400" "/> </div><br> 
 
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2011.44.32.png" width="400" "/> </div><br> 
-  
-  <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2014.08.21.png" width="400" "/> </div><br> 
 
 这里Q1查询到的值为3，Q2查询到的值为1；
 
@@ -236,6 +234,9 @@ Q1读的流程(**当前读的过程**)：
 
 - **因此，在更新的时候，当前读取到的数据是 (1,2)，更新后生成了新版本的数据(1,3)，这个新版本的row trx_id是101**
 - **在执行Q1语句的时候，一看自己的版本号是101，最新数据的版本号也是101，所以查到的值为3**
-​    
-
+### 3.4 可重复读和以提交读的区别 
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2014.08.21.png" width="400" "/> </div><br> 
+  
+  * 在可重复读的隔离级别下，只需要在事务开始时找到那个up_limit_id，之后事务里的其他查询都共用这个up_limit_id；
+  * 在读提交隔离级别下，事务中每一个语句执行前都会重新计算一次up_limit_id的值。
 ​    
