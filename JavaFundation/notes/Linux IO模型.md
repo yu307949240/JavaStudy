@@ -56,7 +56,7 @@
 
 在linux中，默认情况下所有的socket都是blocking，一个典型的读操作流程大概是这样：
 
-![BIO模型](/Users/yuyouquan/Desktop/BIO模型.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/BIO%E6%A8%A1%E5%9E%8B.png" width="400" "/> </div><br> 
 
 ​       当用户进程调用了recvfrom这个系统调用，kernel就开始了IO的第一个阶段：**准备数据**（对于网络IO来说，很多时候数据在一开始还没有到达。比如，还没有收到一个完整的UDP包。这个时候kernel就要等待足够的数据到来）。这个过程需要等待，**也就是说数据被拷贝到操作系统内核的缓冲区中是需要一个过程的。而在用户进程这边，整个进程会被阻塞（当然，是进程自己选择的阻塞）。当kernel一直等到数据准备好了，它就会将数据从kernel中拷贝到用户内存，然后kernel返回结果，用户进程才解除block的状态，重新运行起来**。
 
@@ -78,7 +78,7 @@ BIO两个阶段都是处于阻塞状态的。
 
 ### 2.2.1 网路模型
 
-![NIO模型](/Users/yuyouquan/Desktop/NIO模型.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/NIO%E6%A8%A1%E5%9E%8B.png" width="400" "/> </div><br> 
 
 ​      同步非阻塞就是 “每隔一会儿瞄一眼进度条” 的**轮询（polling）**方式。在这种模型中，**设备是以非阻塞的形式打开的**。这意味着 IO 操作不会立即完成，read 操作可能会返回一个错误代码，说明这个命令不能立即满足（EAGAIN 或 EWOULDBLOCK）。
 
@@ -104,8 +104,8 @@ BIO两个阶段都是处于阻塞状态的。
 
 IO multiplexing就是我们说的select，poll，epoll，有些地方也称这种IO方式为event driven IO。select/epoll的好处就在于单个process就可以同时处理多个网络连接的IO。它的基本原理就是select，poll，epoll这个function会不断的轮询所负责的所有socket，当某个socket有数据到达了，就通知用户进程。
 
-![IO多路复用](/Users/yuyouquan/Desktop/IO多路复用.png)
-
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8.png" width="400" "/> </div><br> 
+  
 **当用户进程调用了select，那么整个进程会被block**，而同时，kernel会“监视”所有select负责的socket，当任何一个socket中的数据准备好了，select就会返回。这个时候用户进程再调用read操作，将数据从kernel拷贝到用户进程。
 
 > 所以，I/O 多路复用的特点是通过一种机制一个进程能同时等待多个文件描述符，而这些文件描述符（套接字描述符）其中的任意一个进入读就绪状态，select()函数就可以返回。
@@ -120,7 +120,7 @@ IO multiplexing就是我们说的select，poll，epoll，有些地方也称这�
 
 信号驱动式I/O：首先我们允许Socket进行信号驱动IO,并安装一个信号处理函数，进程继续运行并不阻塞。当数据准备好时，进程会收到一个SIGIO信号，可以在信号处理函数中调用I/O操作函数处理数据。过程如下图所示：
 
-![信号驱动IO](/Users/yuyouquan/Desktop/信号驱动IO.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E4%BF%A1%E5%8F%B7%E9%A9%B1%E5%8A%A8IO.png" width="400" "/> </div><br> 
 
 ## 2.5 异步I/O
 
@@ -130,7 +130,7 @@ IO multiplexing就是我们说的select，poll，epoll，有些地方也称这�
 
 Linux提供了AIO库函数实现异步，但是用的很少。目前有很多开源的异步IO库，例如libevent、libev、libuv。异步过程如下图所示：
 
-![异步IO](/Users/yuyouquan/Desktop/异步IO.png)
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%BC%82%E6%AD%A5IO.png" width="400" "/> </div><br>
 
 # 三 五种I/O模型总结
 
@@ -148,7 +148,9 @@ Linux提供了AIO库函数实现异步，但是用的很少。目前有很多开
 
 ## 5.3 各个IO模型对比
 
-![各个IO模型对比](/Users/yuyouquan/Desktop/各个IO模型对比.png)通过上面的图片，可以发现non-blocking IO和asynchronous IO的区别还是很明显的。在non-blocking IO中，虽然进程大部分时间都不会被block，但是它仍然要求进程去主动的check，并且当数据准备完成以后，也需要进程主动的再次调用recvfrom来将数据拷贝到用户内存。而asynchronous IO则完全不同。它就像是用户进程将整个IO操作交给了他人（kernel）完成，然后他人做完后发信号通知。在此期间，用户进程不需要去检查IO操作的状态，也不需要主动的去拷贝数据。
+<div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%90%84%E4%B8%AAIO%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94.png" width="400" "/> </div><br>
+
+通过上面的图片，可以发现non-blocking IO和asynchronous IO的区别还是很明显的。在non-blocking IO中，虽然进程大部分时间都不会被block，但是它仍然要求进程去主动的check，并且当数据准备完成以后，也需要进程主动的再次调用recvfrom来将数据拷贝到用户内存。而asynchronous IO则完全不同。它就像是用户进程将整个IO操作交给了他人（kernel）完成，然后他人做完后发信号通知。在此期间，用户进程不需要去检查IO操作的状态，也不需要主动的去拷贝数据。
 
 # 四 I/O多路复用之select、poll、epoll详解
 
