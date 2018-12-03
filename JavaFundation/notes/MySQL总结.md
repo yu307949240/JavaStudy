@@ -65,7 +65,7 @@ select * from tuser where name like '张 %' and age=10 and ismale=1;
 ​        InnoDB使用的是**聚簇索引**，将主键组织到一棵B+树中，而行数据就储存在叶子节点上，若使用"where id = 14"这样的条件查找主键，则按照B+树的检索算法即可查找到对应的叶节点，之后获得行数据。若对Name列进行条件搜索，则需要两个步骤：第一步在辅助索引B+树中检索Name，到达其叶子节点获取对应的主键。第二步使用主键在主索引B+树种再执行一次B+树检索操作，最终到达叶子节点即可获取整行数据。
 
 　　MyISM使用的是**非聚簇索引**，非聚簇索引的两棵B+树看上去没什么不同，节点的结构完全一致只是存储的内容不同而已，主键索引B+树的节点存储了主键，辅助键索引B+树存储了辅助键。表数据存储在独立的地方，这两颗B+树的叶子节点都使用一个地址指向真正的表数据，对于表数据来说，这两个键没有任何差别。由于索引树是独立的，通过辅助键检索无需访问主键的索引树。
-  
+
   <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-27%2020.55.50.png" width="400" "/> </div><br> 
 
 ### 1.7 索引失效的场景
@@ -128,12 +128,12 @@ InnoDB实现了以下两种方式的行锁：
 ### 2.3 InnoDB行锁实现方式
 
 ​       InnoDB行锁是通过索引上的索引项来实现的，这就意味着：**只有通过索引来检索数据，InnoDB才会使用行级锁，否则是否表锁！**
-    行锁包括**共享锁(S)和排他锁(X)**
+​    行锁包括**共享锁(S)和排他锁(X)**
 
 ### 2.4 Next-Key Locks
    在介绍临建锁之前先介绍下记录锁(Record Locks)、间隙锁(Gap Locks)、临建锁(Next-Key Locks)。
    * **记录锁(Record Locks)**    
-   封锁索引记录，例如：
+      封锁索引记录，例如：
    ```sql
    select * from t where id = 1 for update; ## id为索引
    ```
@@ -144,9 +144,9 @@ InnoDB实现了以下两种方式的行锁：
    select * from t where id between 8 and 15 
    ```
    * **临键锁(Next-Key Locks)**  
-   是**记录锁和间隙锁**的组合，用来解决“幻读”的问题，如下所述：  
+      是**记录锁和间隙锁**的组合，用来解决“幻读”的问题，如下所述：  
 ​  当我们用范围条件而不是相等条件检索数据，并请求共享或排他锁时，InnoDB会给符合条件的已有数据的索引项加锁；对于键值在条件范围内但并不存在的记录，叫做“间隙(GAP)”，InnoDB也会对这个“间隙”加锁。  
-   举例来说，假如emp表中只有101条记录，其empid的值分别是1,2,...,100,101，下面的SQL：
+      举例来说，假如emp表中只有101条记录，其empid的值分别是1,2,...,100,101，下面的SQL：
 
 ```sql
 SELECT * FROM emp WHERE empid > 100 FOR UPDATE
@@ -160,13 +160,13 @@ SELECT * FROM emp WHERE empid > 100 FOR UPDATE
 * （３）在不同的隔离级别下，InnoDB的锁机制和一致性读策略不同。
 * （４）ＭySQL的恢复和复制对InnoDB锁机制和一致性读策略也有较大影响。
 * （５）锁冲突甚至死锁很难完全避免。
-   
+  
 ## 3.MySQL中的事务
 
 ​       提到事务肯定会想到事务到ACID，其中多个事务同时执行，就可能出脏读、不可重复读、幻读的问题。为了解决这些问题，就有了**事务隔离级别**的概念。事务隔离级别包括：读未提交(read-uncommitted)、读提交(read-committed)、可重复读(repeatable-read)、可串行化(serializable)。
 
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2010.47.49.png" width="400" "/> </div><br> 
-  
+
 - 读未提交是指，一个事务还没提交时，它做的变更就能被别的事务看到；**<font color="#FF0000">V1、V2、V3值都是2</font>**
 - 读提交是指，一个事务提交之后，它做的变更就能被别的事务看到；**<font color="#FF0000">V1是1、V2、V3是2</font>**
 - 可重复读是，一个事务执行过程中看到的数据，总是跟这个事务在启动时看到的数据是一致的。当然在可重复读隔离级别下，未提交变更对其他事务也是不可见的；**<font color="#FF0000">V1、V2是1，V3是2</font>**
@@ -247,7 +247,7 @@ Q1读的流程(**当前读的过程**)：
 - **在执行Q1语句的时候，一看自己的版本号是101，最新数据的版本号也是101，所以查到的值为3**
 ### 3.4 可重复读和以提交读的区别 
 <div align="center"> <img src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-30%2014.08.21.png" width="400" "/> </div><br> 
-  
+
   * 在可重复读的隔离级别下，只需要在事务开始时找到那个up_limit_id，之后事务里的其他查询都共用这个up_limit_id；
   * 在读提交隔离级别下，事务中每一个语句执行前都会重新计算一次up_limit_id的值。
 ### 3.5 快照读和当前读
@@ -266,3 +266,95 @@ insert;
 update;
 delete;
 ```
+
+四种隔离级别下执行CRUD时加锁情况：
+
+(1) **读未提交**：select不加锁，可能出现读脏；
+
+(2) **读提交(RC)**：普通select快照读，锁select /update /delete 会使用记录锁，可能出现不可重复读；
+
+(3) **可重复读(RR)**：普通select快照读，锁select /update /delete 根据查询条件情况，会选择记录锁，或者间隙锁/临键锁，以防止读取到幻影记录；
+
+(4) **串行化**：select隐式转化为select ... in share mode，会被update与delete互斥；
+
+### 3.6 快照读在RR和RC下有何差异
+
+t(id PK, name);
+
+表中有三条记录：
+1, shenjian
+2, zhangsan
+3, lisi
+
+* case 1，两个并发事务A，B执行的时间序列如下（A先于B开始，B先于A结束）：
+
+A1: start transaction;
+​         B1: start transaction;
+A2: select * from t;
+​         B2: insert into t values (4, wangwu);
+A3: select * from t;
+​         B3: commit;
+A4: select * from t;
+
+**提问1：事务隔离级别是RR，A2、A3、A4分别读出的结果是什么？答案：(1、2、3)、(1、2、3)、(1、2、3)**
+
+**提问2:   事务隔离级别是RC，A2、A3、A4分别读出的结果是什么？答案：(1、2、3)、(1、2、3)、(1、2、3、4)**
+
+* case 2，仍然是并发的事务A与B（A先于B开始，B先于A结束）：
+
+A1: start transaction;
+​         B1: start transaction;
+​         B2: insert into t values (4, wangwu);
+​         B3: commit;
+A2:  select * from t;
+
+**提问1：RR情况下，A2的结果是什么？答案：(1、2、3)**
+
+**提问2：RC情况下，A2的结果是什么？答案：(1、2、3、4)**
+
+* case 3，
+
+  事务A先执行，并且处于未提交状态：
+
+  delete from t where id=40;
+
+  事务A想要**删除一条不存在的记录**。 
+
+  事务B后执行：
+
+  insert into t values(40, ‘c’);
+
+  事务B想要**插入一条主键不冲突的记录**。
+
+**提问1：事务B是否阻塞？答案：是阻塞的，事务A执行delete会持有该行锁(X锁)**
+
+**提问2：如果事务B阻塞，锁如何加在一条不存在的记录上？**
+
+**提问3：事务的隔离级别，索引类型是否对问题1和2有影响？不会有影响**
+
+* case 3，RR
+
+  事务A**先**执行，还**未提交**：
+
+  insert into t(name) values(xxx);
+
+  事务B**后**执行：
+
+  insert into t(name) values(ooo);
+
+**提问1：事务B会不会被阻塞？答案：没有用到索引不会阻塞**
+
+case 4，RR
+
+事务A先执行，查询了一些记录，还未提交：
+
+select * from t where id>10;
+
+事务B后执行，在10与20两条记录中插入了一行：
+
+insert into t values(11, xxx);
+
+**提问1：事务B会不会阻塞？不会阻塞**
+
+**提问2：如果事务A加上for update，事务B会不会阻塞？会阻塞，因为是加了临键锁(Next-Key Lock)，防止幻读。**
+
