@@ -15,4 +15,8 @@
 * [ThreadPoolExecutor](https://github.com/yu307949240/JavaStudy/blob/master/juc/README.md#13-threadpoolexecutor)
 * [Semaphore](https://github.com/yu307949240/JavaStudy/blob/master/juc/README.md#21-semaphore)
 * [CountDownLatch](https://github.com/yu307949240/JavaStudy/blob/master/juc/README.md#22-countdownlatch)
+## [MySQL总结](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/MySQL%E6%80%BB%E7%BB%93.md)
+## [Redis总结](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/Redis%E6%80%BB%E7%BB%93.md)
+## [Linux IO模型总结](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/Linux%20IO%E6%A8%A1%E5%9E%8B.md)
+## [面试总结](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93.md)
 
