@@ -177,7 +177,7 @@ SELECT * FROM emp WHERE empid > 100 FOR UPDATE
 - 查看当前事务隔离级别：**<font color="#FF0000">select @@tx_isolation;</font>**
 - 设置事务的隔离级别：**<font color="#FF0000">set tx_isolation='repeatable-read';</font>**
 - 开启一个事务：**<font color="#FF0000">start transaction;／begin</font>**
-- 提交或回滚一个事务：**<font color="#FF0000">commit / rollback</font>**
+- 提交或回滚一个事务：**commit / rollback**
 - <font color="#FF0000">set autocommit=0;</font>**，该命令会把这个线程的**自动提交关掉。这样只要执行一个select语句，事务就启动，并不会自动提交，直到主动执行commit或rollback或断开连接。   
 - 默认的<font color="#FF0000">set autocommit=1;</font>，可以使用**begin/start transaction**开启事务， 执行**<font color="#FF0000">commit work and chain;</font>**则提交事务并自动启动下一个事务。
 
