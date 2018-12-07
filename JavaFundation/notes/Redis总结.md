@@ -129,6 +129,7 @@ struct dictEntry *next;
 
 <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2020.07.31.png" width="300" "/> </div><br>
+
 ### 1.3.3定期删除
 
 上述两种删除策略一个是对cpu不友好一个是对内存不友好，所以采用定期清理策略来完善二者。
