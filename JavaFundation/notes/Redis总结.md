@@ -176,6 +176,7 @@ Redis的AOF持久化是通过追加写命令来实现持久化，默认设置app
 **4）重启加载**
 <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-24%2020.40.32.png" width="300" "/> </div><br>
+
 ## 1.5 事件
 
 Redis是一个事件驱动的程序，服务器需要处理文件事件和时间事件。
