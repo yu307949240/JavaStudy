@@ -184,10 +184,12 @@ Redis是一个事件驱动的程序，服务器需要处理文件事件和时间
 
 Redis是基于Reactor模式来实现文件事件，文件事件使用I/O多路复用程序来同时监听多个套接字，每个套接字对应连接应答(accept)、写入(write)、读取(read)、关闭(close)等操作，文件事件分别由**套接字，I/O多路复用程序，文件事件分派器，以及事件处理器四部分组成**，其中I/O多路复用底层提供多个IO多路复用库函数可选，
 
-![文件事件模型](/Users/yuyouquan/Desktop/文件事件模型.png)
-
-![屏幕快照 2018-12-04 18.45.08](/Users/yuyouquan/Desktop/屏幕快照 2018-12-04 18.45.08.png)
-
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E6%96%87%E4%BB%B6%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B.png" width="300" "/> </div><br>
+ 
+ <div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-12-04%2018.45.08.png" width="300" "/> </div><br>
+ 
 ### 1.5.2 时间事件
 
 时间事件分为定时事件和周期性事件，正常模式下Redis服务器只使用serverCron一个时间事件，Redis服务器以周期性事件的方式运行serverCron函数。serverCron主要工作包括：
@@ -215,8 +217,9 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 
 项目中使用Redis分布式锁案例：
 
-![分布式锁](/Users/yuyouquan/Desktop/分布式锁.png)
-
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81.png" width="300" "/> </div><br>
+ 
 **对于加锁来说：如果先调用setnx，如果获取锁成功在执行expire，但是这两条命令不具有原子性，如果setnx执行之后程序突然崩溃，那么就会造成死锁。**
 
 **对于解锁来说：因为lua脚本能够保证原子性，如果不使用lua，使用先比较requestId，如果想等在删除key，那么这也是不保证原子原子性的，因为判断requestId想等之后有可能到达了key的过期时间，那么就会造成把别的进行获取到的分布式锁释放掉**
@@ -275,4 +278,5 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 * 主服务器的复制积压缓冲区(**如果有一个从服务器断开，再次重连的时候需要从该区域读数据**)
 * **服务器运行ID**
 
-![屏幕快照 2018-12-07 16.24.31](/Users/yuyouquan/Desktop/屏幕快照 2018-12-07 16.24.31.png)
+<div align="center"> <img 
+  src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E7%B3%BB%E7%89%88%E6%9C%AC%E5%A4%8D%E5%88%B6%E6%AD%A5%E9%AA%A4.png" width="300" "/> </div><br>
