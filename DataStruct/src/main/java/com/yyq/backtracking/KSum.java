@@ -20,7 +20,7 @@ public class KSum {
     }
 
     // 每个数字只能用一次
-    private void backtracking(int[] arr, int target, int start, List<Integer> path) {
+    private static void backtracking(int[] arr, int target, int start, List<Integer> path) {
         if (target < 0) {
             return;
         } else if (target == 0) {
@@ -35,7 +35,11 @@ public class KSum {
     }
 
     public static void main(String[] args) {
-
+     int arr[] = {6, 3, 2, 7, 15, 1, 2};
+     backtracking(arr,10,0,new ArrayList<>());
+     for(List l : ret){
+         System.out.println(l.toString());
+     }
     }
 
 }

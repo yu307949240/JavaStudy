@@ -22,7 +22,7 @@ public class quickSort<T extends Comparable<T>> extends Sort<T> {
         int j = l;
         for (int i = l + 1; i <= r; i++) {
             if (less(arr[i], v)) {
-                CommonUtils.swap(arr, j + 1, i);
+                CommonUtils. swap(arr, j + 1, i);
                 j++;
             }
         }

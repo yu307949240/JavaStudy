@@ -13,6 +13,7 @@
         <module>JavaFundation</module>
         <module>DataStruct</module>
         <module>juc</module>
+        <module>spring</module>
     </modules>
 
 

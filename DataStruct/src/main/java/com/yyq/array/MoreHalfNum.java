@@ -1,7 +1,7 @@
 package com.yyq.array;
 
 /**
- * 判断数组中出现次数超过一半的数组
+ * 判断数组中出现次数超过一半的数字
  *
  * @author yyq
  * @since 2018/10/24
@@ -21,6 +21,6 @@ public class MoreHalfNum {
             if (a[i] == major)
                 cnt++;
         }
-        return cnt > a.length / 2 ? cnt : 0;
+        return cnt > a.length / 2 ? major : 0;
     }
 }

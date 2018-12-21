@@ -23,11 +23,13 @@ public class HuiWenStr {
     /**
      * 找出一个字符串中最长回文字符串
      */
-    public String longestPalindrome(String s){
+    public static String longestPalindrome(String s){
         if(s.length() == 1)
             return s;
         if(s.length() == 2 && s.charAt(0) == s.charAt(1))
             return s;
+        //用于标记isLongestPalindrome[j][i]即从j到i是否是回文串；
+        //如isLongestPalindrome[1][5]＝＝true则表示字符串索引位置从1到5的子串是回文串。
         boolean[][] isLongestPalindrome = new boolean[s.length()][s.length()];
         //最长回文串初始最大为0
         int maxlen = 0;
@@ -44,7 +46,7 @@ public class HuiWenStr {
                     isLongestPalindrome[j][i] = true;
                     if(maxlen<i-j+1){
                         beginIndex = j;
-                        lastIndex = j+1;
+                        lastIndex = i+1;
                         maxlen = i-j+1;
                     }
                 }
@@ -52,5 +54,9 @@ public class HuiWenStr {
             }
         }
         return s.substring(beginIndex,lastIndex);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(longestPalindrome("adbffb"));
     }
 }

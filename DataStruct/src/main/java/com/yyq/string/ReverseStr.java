@@ -6,7 +6,7 @@ package com.yyq.string;
  * @author yyq
  * @since 2018/10/16
  */
-public class ReverseStr {
+public class  ReverseStr {
     /**
      * Input:
      * "I am a student."

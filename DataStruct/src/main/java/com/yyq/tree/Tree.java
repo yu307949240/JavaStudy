@@ -211,7 +211,7 @@ public class Tree {
         for (int i = 0; i < in.length; i++)
             inIndexMap.put(in[i], i);
         return reConstructTree(pre, 0, pre.length - 1, 0);
-    }
+}
 
     public Node reConstructTree(int[] pre, int preL, int preR, int inL) {
         Node root = new Node(pre[preL]);
@@ -279,7 +279,7 @@ public class Tree {
     }
 
     /**
-     * 二叉树寻找一个特定的子节点,找出根节点到这个子节点路径
+     * 二叉树寻找一个特定的叶子节点,找出根节点到这个子节点路径
      */
     private ArrayList<ArrayList<Integer>> findPathNode(Node n, int toFind, ArrayList<Integer> path) {
         if (n == null)

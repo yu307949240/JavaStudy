@@ -358,3 +358,11 @@ insert into t values(11, xxx);
 
 **提问2：如果事务A加上for update，事务B会不会阻塞？会阻塞，因为是加了临键锁(Next-Key Lock)，防止幻读。**
 
+case 5，RR：**select不存在的一行加排他锁，那么也会把该行锁住！**
+
+| 事务A  | 事务B |
+| --------   | -----:   |
+| begin;  | begin; |
+| select * from tx where id = 4 for update; //(**id=4这行记录不存在，那么也会持有行锁！**) |       |
+|  | update    tx  set  num =  4 where id = 4;//(**由于事务A持有行锁，所以一直处于阻塞状态，知道事务A commit** |
+

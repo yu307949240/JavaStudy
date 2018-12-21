@@ -7,7 +7,7 @@ package com.yyq.array;
  * @since 2018/10/24
  */
 public class MaxSumOfSubArray {
-    public int maxSumOfSubArray(int[] a) {
+    public static int maxSumOfSubArray(int[] a) {
         if (a == null || a.length == 0)
             return 0;
         int maxSum = Integer.MIN_VALUE;
@@ -17,5 +17,10 @@ public class MaxSumOfSubArray {
             maxSum = Math.max(maxSum, sum);
         }
         return maxSum;
+    }
+
+    public static void main(String[] args) {
+        int arr[] =  {6, -3, -2, 7, -15, 1, 2, 2};
+        System.out.println(maxSumOfSubArray(arr));
     }
 }
