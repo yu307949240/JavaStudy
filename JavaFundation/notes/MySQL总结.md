@@ -287,7 +287,7 @@ delete;
 
 (3) **可重复读(RR)**：普通select快照读，锁select /update /delete 根据查询条件情况，会选择记录锁，或者间隙锁/临键锁，以防止读取到幻影记录；
 
-(4) **串行化**：**只有串行化方式所有语句都加锁！**select隐式转化为select ... in share mode，会被update与delete互斥；
+(4) **串行化**：**只有串行化方式所有语句都加锁！** select隐式转化为select ... in share mode，会被update与delete互斥；
 
 ### 3.6 快照读在RR和RC下有何差异
 
