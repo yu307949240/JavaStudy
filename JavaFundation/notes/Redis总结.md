@@ -168,9 +168,22 @@ Redis的AOF持久化是通过追加写命令来实现持久化，默认设置app
 
 随着命令不断写入AOF，文件越来越大，为了解决这个问题，Redis引入AOF重写机制压缩文件体积，重写机制包括(1)进程内超时数据不在写入(2)无效的命令不在处理(3)多条命令可以合并为1个
 
+**实现原理(copy on write)：**
+
+**1.调用fork()，创建子进程；**
+
+**2.子进程把AOF写到一个临时文件中，不依赖原来的AOF文件；**
+
+**3.主进程持续将新的变动写到内存和原来的AOF里；**
+
+**4.主进程获取子进程重写AOF完成的信号，往新AOF同步增量变动；**
+
+**5.使用新的AOF文件替换掉旧的AOF文件。**
+
 **手动触发**：直接执行bgrewriteaof
 
 **自动触发**：根据auto-aof-rewrite-min-size（AOF重写文件最小体积）和auto-aof-rewrite-percentage（当前AOF文件空间和上次重写AOF文件空间比值）
+
 <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-11-25%2016.48.51.png" width="300" "/> </div><br>
 
@@ -188,10 +201,10 @@ Redis是基于Reactor模式来实现文件事件，文件事件使用I/O多路�
 
 <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E6%96%87%E4%BB%B6%E4%BA%8B%E4%BB%B6%E6%A8%A1%E5%9E%8B.png" width="300" "/> </div><br>
- 
+
  <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-12-04%2018.45.08.png" width="300" "/> </div><br>
- 
+
 ### 1.5.2 时间事件
 
 时间事件分为定时事件和周期性事件，正常模式下Redis服务器只使用serverCron一个时间事件，Redis服务器以周期性事件的方式运行serverCron函数。serverCron主要工作包括：
@@ -221,7 +234,7 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 
 <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81.png" width="300" "/> </div><br>
- 
+
 **对于加锁来说：如果先调用setnx，如果获取锁成功在执行expire，但是这两条命令不具有原子性，如果setnx执行之后程序突然崩溃，那么就会造成死锁。**
 
 **对于解锁来说：因为lua脚本能够保证原子性，如果不使用lua，使用先比较requestId，如果想等在删除key，那么这也是不保证原子原子性的，因为判断requestId想等之后有可能到达了key的过期时间，那么就会造成把别的进行获取到的分布式锁释放掉**
@@ -282,3 +295,21 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 
 <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E7%B3%BB%E7%89%88%E6%9C%AC%E5%A4%8D%E5%88%B6%E6%AD%A5%E9%AA%A4.png" width="300" "/> </div><br>
+## 1.10 Redis Sentinel
+
+解决主从同步模式中master宕机之后主从切换问题：
+
+**(1) 监控：检查主服务器是否运行正常；**
+
+**(2) 提醒：通过API向管理员或者其他应用程序发送故障通知；**
+
+**(3) 自动故障迁移：主从切换。**
+
+## 1.11 Gossip协议
+
+在杂乱无章中寻求一致：
+**(1) 每个节点都随机的与对方通信，最终所有节点状态达成一致；**
+
+**(2) 种子节点定期随机的向其他节点列表以及需要传播的消息；**
+
+**(3) 不保证信息一定会传递给所有节点，但是最终会趋于一致**
