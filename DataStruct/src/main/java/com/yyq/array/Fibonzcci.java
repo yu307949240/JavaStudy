@@ -13,8 +13,8 @@ public class Fibonzcci {
      * 一个兔子一次可以跳1个或者2两个台阶，一共有n级台阶，一共可以跳多少次
      */
     public int jumpFloor(int n) {
-        int[] res = {0, 1, 2};
-        if (n <= 2) {
+        int[] res = {0, 1};
+        if (n < 2) {
             return res[n];
         }
         return jumpFloor(n - 1) + jumpFloor(n - 2);

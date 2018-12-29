@@ -96,7 +96,7 @@ public class LinkedListProblems {
     }
 
     /**
-     * 反转单向链表
+     * 反转单向链表迭代
      */
     public void reverse(Node head) {
         Node pre = null;
@@ -105,8 +105,22 @@ public class LinkedListProblems {
             next = head.next;
             head.next = pre;
             pre = head;
+
             head = next;
         }
+    }
+
+    /**
+     * 反转单项链表递归
+     */
+    public Node reverse2(Node head) {
+        if (head == null)
+            return null;
+        Node next = head.next;
+        head.next = null;
+        Node newNode = reverse2(next);
+        next.next = head;
+        return newNode;
     }
 
     /**

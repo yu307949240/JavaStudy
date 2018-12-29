@@ -9,7 +9,7 @@ package com.yyq.java;
 public class StringTest {
     public static void main(String[] args) {
         String str1 = "hello word"; // 字面常量，保存在常量池中
-        String str2 = new String("hello word"); // 会在堆中new一个对象
+        String str2 = new String("hello word"); // 会在堆中new一个对象 like '123' =123
         String str3 = "hello word";
         String str4 = new String("hello word");
         System.out.println(str1 == str3); // true

@@ -24,7 +24,7 @@ public class StaticTest {
     }
 
     public static void main(String[] args) {
-        //StaticTest.test();
+        StaticTest.test();
         /*
          静态代码块！
          静态方法中的内容！
