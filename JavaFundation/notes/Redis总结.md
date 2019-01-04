@@ -239,7 +239,7 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 
 **对于解锁来说：因为lua脚本能够保证原子性，如果不使用lua，使用先比较requestId，如果想等在删除key，那么这也是不保证原子原子性的，因为判断requestId想等之后有可能到达了key的过期时间，那么就会造成把别的进行获取到的分布式锁释放掉**
 
-## 1.8 集群扩缩容
+## 1.8 集群扩容
 
 ### 1.8.1 集群扩容
 
@@ -271,9 +271,27 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 
 6）向集群内所有主节点发送cluster setslot{slot} node {targetNodeId}，通知槽分配给目标节点。
 
-## 1.9 Redis主从复制
+## 1.9 集群故障检测和故障转移
 
-### 1.9.1 2.8版本之前主从复制
+### 1.9.1 故障检测
+
+集群中每个节点都会定期地向集群中的其他节点发送PING消息，以此来检测对方是否在线，如果接收PING消息的节点没有在规定时间内回复PONG消息，那么发送PING消息的节点就会将接收PING消息的节点标记为**疑似下线（probable fail, PFAIL)**。
+
+在一个集群中，**超过半数以上**负责处理槽的主节点都将这个主节点x报告为疑似下线，那么这个主节点x将被标记为以下线（FAIL），并向**集群广播一条关于主节点x的FAIL消息**。
+
+### 1.9.2 故障转移
+
+节点下线后，从节点将开始对下线主节点进行故障转移，有以下几个步骤：
+
+- 1）**选主(Raft算法)**：从从节点中选出新的主节点
+- 2）**SLAVEOF no one：**被选中的从节点会执行**SLAVEOF no one命令**，成为新的主节点
+- 3）**指派槽：**新的主节点会撤销所有对已下线主节点的槽指派，并将这些槽全部指派给自己
+- 4）**广播新主节点：**新的主节点像集群广播PONG消息，让其它节点了解这个节点已经成为新的主节点，接管原本已下线节点负责处理的槽
+- 5）**处理请求：**新的主节点开始接受和自己负责处理的槽有关的命令请求，故障转移完成。
+
+## 1.10 Redis主从复制
+
+### 1.10.1 2.8版本之前主从复制
 
 执行SYNC步骤：
 
@@ -285,7 +303,7 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 
 如果在同步时候出现中断，从服务器会发送SYNC，主服务器会把当前**所有的键值对**bgsave成一个RDB文件，一并发送到从服务器，这样做是低效的。生成RDB文件过程是耗费CPU、内存和磁盘I/O资源
 
-### 1.9.2 新版本复制
+### 1.10.2 新版本复制
 
 和旧版本的区别主要是实现了部分重同步，包括三个部分：
 
@@ -295,17 +313,26 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 
 <div align="center"> <img 
   src="https://github.com/yu307949240/JavaStudy/blob/master/pics/%E7%B3%BB%E7%89%88%E6%9C%AC%E5%A4%8D%E5%88%B6%E6%AD%A5%E9%AA%A4.png" width="300" "/> </div><br>
-## 1.10 Redis Sentinel
+## 1.11 Redis Sentinel
 
-解决主从同步模式中master宕机之后主从切换问题：
+### 1.11.1故障转移处理：
 
-**(1) 监控：检查主服务器是否运行正常；**
+* 1）**主观下线**：sentinel每隔1秒向master发送ping，如果在一段时间内没有收到回复或者收到无效回复，则认为master主观下线。
+* 2）**客观下线**：如果一个sentinel认为master主观下线，会询问其他sentinel是否下线，如果认为master主观下线的master达到一定数量，那么认为其客观下线
+* 3）**选择leader sentinel(Raft算法)**：进行故障处理，由它负责故障转移
+* 4）**leader会在slaves中选择一个作为新的master**。leader向master发送**slaveof on one**，向其他slaves发送**slaveof ip port**（新的master的ip和port），slaves就会复制新的master中的数据。
 
-**(2) 提醒：通过API向管理员或者其他应用程序发送故障通知；**
+### 1.11.2 leader会选择哪一个slave作为新的master？
 
-**(3) 自动故障迁移：主从切换。**
+**1）排除断线的slaves**
 
-## 1.11 Gossip协议
+**2）选择优先级最高的**
+
+**3）选择复制偏移量最大的**
+
+**4）选择run_id最小的**
+
+## 1.12 Gossip协议
 
 在杂乱无章中寻求一致：
 **(1) 每个节点都随机的与对方通信，最终所有节点状态达成一致；**
