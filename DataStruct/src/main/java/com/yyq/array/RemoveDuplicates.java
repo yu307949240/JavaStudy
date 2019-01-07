@@ -11,7 +11,7 @@ public class RemoveDuplicates {
         if (arr.length == 0)
             return 0;
         int pos = 0;
-        for (int i = 0; i < arr.length; i++) {
+        for (int i = 1; i < arr.length; i++) {
             if (arr[i] != arr[pos]) {
                 pos++;
                 arr[pos] = arr[i];
