@@ -1,7 +1,5 @@
 package com.yyq.array;
 
-import java.util.Vector;
-
 /**
  * 一个长度为2N的数组，前面N个是数字，后面N个是字母，类似123abc,让转化为1a2b3c
  * <p>

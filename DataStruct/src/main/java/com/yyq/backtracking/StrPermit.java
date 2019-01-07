@@ -30,12 +30,12 @@ public class StrPermit {
                 continue;
             if (i != 0 && chs[i] == chs[i - 1] && !marked[i - 1]) /* 保证不重复 */
                 continue;
-             marked[i] = true;
+            marked[i] = true;
             s.append(chs[i]);
-    backtracking(chs, marked, s);
+            backtracking(chs, marked, s);
             s.deleteCharAt(s.length() - 1);
-    marked[i] = false;
-}
+            marked[i] = false;
+        }
     }
 
     public static void main(String[] args) {
