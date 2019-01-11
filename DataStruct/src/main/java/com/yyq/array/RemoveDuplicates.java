@@ -2,7 +2,7 @@ package com.yyq.array;
 
 /**
  * 数组原地去重
- *
+ * [1,1,2] --> [1,2]
  * @author yyq
  * @since 2018/10/21
  */

@@ -14,7 +14,7 @@ public class IntegerBreak {
             return 1;
         if (n == 3)
             return 2;
-        int timesOf3 = n / 2;
+        int timesOf3 = n / 3;
         if (n - 3 * timesOf3 == 1) {
             timesOf3--;
         }

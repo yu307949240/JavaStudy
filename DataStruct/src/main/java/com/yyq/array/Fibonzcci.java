@@ -20,15 +20,30 @@ public class Fibonzcci {
         return jumpFloor(n - 1) + jumpFloor(n - 2);
     }
 
+    public int jumpFloor2(int n) {
+        int[] res = {0, 1};
+        if (n < 2) {
+            return res[n];
+        }
+        int pre2 = 1, pre1 = 2;
+        int cur = 0;
+        for (int i = 2; i < n; i++) {
+            cur = pre1 + pre2;
+            pre2 = pre1;
+            pre1 = cur;
+        }
+        return cur;
+    }
+
     /**
      * 计算出N元人民币兑换成1元，2元和5元纸币的所有组合
      */
-    public int sum(int N){
-        int counter = 0,i,j,k;
-        for(i=1;i<=N/1;i++){
-            for(j=1;j<=N/2;j++){
-                for(k=1;k<=N/5;k++){
-                    if(i*1+j*2+k*5 == N){
+    public int sum(int N) {
+        int counter = 0, i, j, k;
+        for (i = 1; i <= N / 1; i++) {
+            for (j = 1; j <= N / 2; j++) {
+                for (k = 1; k <= N / 5; k++) {
+                    if (i * 1 + j * 2 + k * 5 == N) {
                         counter++;
                     }
                 }

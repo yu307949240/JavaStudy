@@ -12,7 +12,7 @@ public class OccFreq {
      * 求解 k 在 arr 中第一次出现的索引位置
      * @param arr 有序数组
      * @param k
-     * @return k第一次出现的索引位置,若 k 不在 arr中返回 -1
+     * @return k第一次出现的k第一次出现的索引位置索引位置,若 k 不在 arr中返回 -1
      */
     public static int getFirst(int[] arr, int k){
         if(arr == null || arr.length == 0)

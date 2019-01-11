@@ -10,17 +10,20 @@ public class MaxSumOfSubArray {
     public static int maxSumOfSubArray(int[] a) {
         if (a == null || a.length == 0)
             return 0;
-        int maxSum = Integer.MIN_VALUE;
-        int sum = 0;
+        int maxHere, maxSum;
+        maxHere = maxSum = a[0];
         for (int val : a) {
-            sum = sum <= 0 ? val : sum + val;
-            maxSum = Math.max(maxSum, sum);
+            if (maxHere < 0)
+                maxHere = val;
+            else
+                maxHere += val;
+            maxSum = Math.max(maxSum, maxHere);
         }
         return maxSum;
     }
 
     public static void main(String[] args) {
-        int arr[] =  {6, -3, -2, 7, -15, 1, 2, 2};
+        int arr[] = {6, -3, -2, 7, -15, 1, 2, 2};
         System.out.println(maxSumOfSubArray(arr));
     }
 }
