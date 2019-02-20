@@ -1,6 +1,8 @@
 package com.yyq.string;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * 最长不含重复字符的子字符串
@@ -27,6 +29,25 @@ public class LongestSubStr {
             preIndex[i] = i;
         }
         maxLen = Math.max(maxLen, curLen);
+        return maxLen;
+    }
+
+    public int longestSubStr2(String str) {
+        if (str.length() == 0)
+            return 0;
+        int maxLen = 0;
+        List<Character> list = new ArrayList<>();
+        list.add(str.charAt(0));
+        for (int i = 1; i < str.length(); i++) {
+            if (list.contains(str.charAt(i))) {
+                list.subList(list.indexOf(str.charAt(i)) + 1, list.size());
+                list.add(str.charAt(i));
+                maxLen = Math.max(maxLen, list.size());
+            } else {
+                list.add(str.charAt(i));
+                maxLen = Math.max(maxLen, list.size());
+            }
+        }
         return maxLen;
     }
 }

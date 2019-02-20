@@ -21,6 +21,142 @@ public class Tree {
     }
 
     /**
+     * 给定一个n,求1...n可以形成多少个二叉搜索树(动态规划)
+     */
+    public int search(int n) {
+        int[] res = new int[n];
+        res[0] = 1;
+        res[1] = 1;
+        for (int i = 2; i < n; i++) {
+            for (int j = 1; j < i;  j++) {
+                res[i] = res[j - 1] * res[i - j];
+            }
+        }
+        return res[n];
+    }
+    List<Node> res = new ArrayList<>();
+    public List<Node> constuct(int start,int end){
+        if(start>end){
+            res.add(null);
+            return null;
+        }
+        for(int i=start;i<=end;i++){
+            List<Node> leftTree = constuct(start,i-1);
+            List<Node> rightTree = constuct(i+1,end);
+            for(Node left : leftTree){
+                for(Node right : rightTree){
+                    Node  node = new Node(i);
+                    node.left = left;
+                    node.right = right;
+                    res.add(node);
+                }
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 二叉树转换为链表
+     */
+    public void treeToList(Node r){
+        if(r==null) return;
+        treeToList(r.left);
+        treeToList(r.right);
+        if(r.left!=null){
+            Node right = r.right;
+            r.right = r.left;
+            while(r.right!=null)
+                r = r.right;
+            r.right = right;
+        }
+    }
+
+
+    /**
+     * 合并两个二叉树
+     */
+    public Node mergeTwo(Node r1, Node r2) {
+        if (r1 == null && r2 == null) return null;
+        if (r1 == null) return r2;
+        if (r2 == null) return r1;
+        Node r = new Node(r1.value + r2.value);
+        r.left = mergeTwo(r1.left, r2.left);
+        r.right = mergeTwo(r1.right, r2.right);
+        return r;
+    }
+
+    /**
+     * 验证是否为二分搜索树（或者直接中序遍历检查是否为排序数组！）
+     */
+    public boolean isSearch(Node root) {
+        return isSearch(root, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    private boolean isSearch(Node root, int minValue, int maxValue) {
+        if (root == null)
+            return true;
+        if (root.value < minValue || root.value > maxValue)
+            return false;
+        return isSearch(root.left, minValue, root.value) && isSearch(root.right, root.value, maxValue);
+    }
+
+    /**
+     * 将有序数组转换为BST
+     */
+    public Node sortedToBST(int[] arr) {
+        return sorted(arr, 0, arr.length);
+    }
+
+    private Node sorted(int[] arr, int l, int r) {
+        if (l > r) return null;
+        int m = (l + r) / 2;
+        Node root = new Node(arr[m]);
+        root.left = sorted(arr, l, m - 1);
+        root.right = sorted(arr, m + 1, r);
+        return root;
+    }
+
+    class ListNode {
+        int value;
+        ListNode next;
+
+        public ListNode(int d) {
+            value = d;
+        }
+    }
+
+    /**
+     * 有序链表构建二叉搜索树
+     */
+    public Node buildBST(ListNode head, ListNode tail) {
+        if (head == null)
+            return null;
+        if (head.next == null)
+            return new Node(head.value);
+        ListNode low = head, fast = head;
+        while (low != null && fast != null) {
+            low = low.next;
+            fast = fast.next.next;
+        }
+        Node root = new Node(low.value);
+        root.left = buildBST(head, low);
+        root.right = buildBST(low.next, tail);
+        return root;
+    }
+
+    /**
+     * 二叉树中最大的路径和
+     */
+    public int maxPathSum(Node root) {
+        if (root == null)
+            return 0;
+        int left = maxPathSum(root.left);
+        int right = maxPathSum(root.right);
+        max = Math.max(max, root.value + left + right);
+        return Math.max(left, right) + root.value;
+    }
+
+    /**
      * 找到树中任意节点最大的距离
      */
     int max = 0;
@@ -163,22 +299,36 @@ public class Tree {
     }
 
     /**
-     * 判断一棵树是否为对称二叉树
+     * 判断两颗树是否相同
      */
-    public boolean isSymmic(Node r){
-        if(r == null)
+    public boolean isSame(Node r1, Node r2) {
+        if (r1 == null && r2 == null)
             return true;
-        return isSymmic(r.left,r.right);
+        if (r1 == null || r2 == null)
+            return false;
+        if (r1.value != r2.value)
+            return false;
+        return isSame(r1.left, r2.left) && isSame(r1.right, r2.right);
+
     }
 
-    private boolean isSymmic(Node r1,Node r2){
-        if(r1==null&&r2==null)
+    /**
+     * 判断一棵树是否为对称二叉树
+     */
+    public boolean isSymmic(Node r) {
+        if (r == null)
             return true;
-        if(r1==null||r2==null)
+        return isSymmic(r.left, r.right);
+    }
+
+    private boolean isSymmic(Node r1, Node r2) {
+        if (r1 == null && r2 == null)
+            return true;
+        if (r1 == null || r2 == null)
             return false;
-        if(r1.value!=r2.value)
+        if (r1.value != r2.value)
             return false;
-        return isSymmic(r1.left,r2.right) && isSymmic(r1.right,r2.left);
+        return isSymmic(r1.left, r2.right) && isSymmic(r1.right, r2.left);
     }
 
 
@@ -211,7 +361,7 @@ public class Tree {
         for (int i = 0; i < in.length; i++)
             inIndexMap.put(in[i], i);
         return reConstructTree(pre, 0, pre.length - 1, 0);
-}
+    }
 
     public Node reConstructTree(int[] pre, int preL, int preR, int inL) {
         Node root = new Node(pre[preL]);
@@ -296,7 +446,7 @@ public class Tree {
     }
 
     /**
-     * 输出二叉树根节点到叶子节点的所有路径
+     * 输出二叉树根节点到叶子节点的所有路径(可以求二叉树的最小深度！！！)
      */
     private ArrayList<ArrayList<Integer>> findAllPath(Node n, ArrayList<Integer> path) {
         if (n == null)

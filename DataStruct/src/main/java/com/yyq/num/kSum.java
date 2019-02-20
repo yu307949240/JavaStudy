@@ -27,7 +27,7 @@ public class kSum {
             for (int i = start; i < data.length; i++) {
                 path.add(data[i]);
                 backtracking(data, k, m - data[i], i + 1, path);
-                path.remove(path.remove(path.size() - 1));
+                path.remove(path.size() - 1);
             }
         }
     }

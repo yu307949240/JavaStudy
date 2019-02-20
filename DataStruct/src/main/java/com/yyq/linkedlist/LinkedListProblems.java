@@ -1,5 +1,7 @@
 package com.yyq.linkedlist;
 
+import com.yyq.tree.Tree;
+
 import java.util.*;
 
 /**
@@ -16,6 +18,163 @@ public class LinkedListProblems {
         public Node(int d) {
             value = d;
         }
+    }
+
+    class TreeNode {
+        public int value;
+        public TreeNode left;
+        public TreeNode right;
+
+        public TreeNode(int d) {
+            value = d;
+        }
+
+    }
+
+    /**
+     * 删除链表重复节点(只留一个)
+     */
+    public Node removeDup(Node head) {
+        if (head == null) return null;
+        int delVal = head.value;
+        Node node = head;
+        while (node != null) {
+            if (delVal == node.next.value) {
+                node.next = node.next.next;
+            } else {
+                node = node.next;
+                delVal = node.value;
+            }
+        }
+        return head;
+    }
+
+    /**
+     * 删除链表中重复节点(一个不留)
+     */
+    public Node removeDup2(Node head) {
+        if (head == null || head.next == null)
+            return head;
+        Node pre = null;
+        Node node = head;
+        while (node != null) {
+            Node next = node.next;
+            boolean needDelete = false;
+            if (next != null && next.value == node.value)
+                needDelete = true;
+            if (!needDelete) {
+                pre = node;
+                node = node.next;
+            } else {
+                int value = node.value;
+                Node pToBeDel = node;
+                while (pToBeDel != null && pToBeDel.value == value) {
+                    next = pToBeDel.next;
+                    pToBeDel = next;
+                }
+                if (node == null)
+                    head = next;
+                else
+                    pre.next = next;
+                node = next;
+            }
+        }
+        return head;
+    }
+
+    /**
+     * 删除链表中重复节点(一个不留)递归
+     */
+    public Node removeDup3(Node head) {
+        if (head == null || head.next == null)
+            return head;
+        Node next = head.next;
+        if (next.value == head.value) {
+            while (next != null && next.value == head.value)
+                next = next.next;
+            return removeDup3(next);
+        } else {
+            head.next = removeDup3(head.next);
+            return head;
+        }
+    }
+
+    /**
+     * 归并排序链表
+     */
+    public Node mergeList(Node head) {
+        return head == null ? null : mergeSort(head);
+    }
+
+    public Node mergeSort(Node head) {
+        if (head == null) return null;
+        Node p = head, q = head, pre = null;
+        while (p != null && q != null) {
+            pre = p;
+            p = p.next;
+            q = q.next.next;
+        }
+        pre.next = null;
+        Node l = mergeSort(head);
+        Node r = mergeSort(p);
+        return merge(l, r);
+    }
+
+    /**
+     * 有序链表构建二叉搜索树
+     */
+    public TreeNode buildBST(Node head, Node tail) {
+        if (head == tail)
+            return null;
+        if (head.next == tail)
+            return new TreeNode(head.value);
+        Node low = head, fast = head;
+        while (low != null && fast != null) {
+            low = low.next;
+            fast = fast.next.next;
+        }
+        TreeNode root = new TreeNode(low.value);
+        root.left = buildBST(head, low);
+        root.right = buildBST(low.next, tail);
+        return root;
+    }
+
+    /**
+     * 两两交换链表中节点
+     */
+    public Node swapPairs(Node head) {
+        Node h1 = new Node(0);
+        h1.next = head;
+        Node h2 = h1;
+        while (head != null && head.next != null) {
+            h2.next = head.next;
+            head.next = h2.next.next;
+            h2.next.next = head;
+            h2 = h2.next.next;
+            head = h2.next;
+        }
+        return h1;
+    }
+
+    /**
+     * 分隔两个链表, 给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前。
+     * 输入: head = 1->4->3->2->5->2, x = 3
+     * 输出: 1->2->2->4->3->5
+     */
+    public Node partition(Node head, int x) {
+        Node l = new Node(0);
+        Node h = new Node(0);
+        while (head != null) {
+            if (head.value < x) {
+                l.next = head;
+            } else {
+                h.next = head;
+            }
+            head = head.next;
+        }
+        l.next = h.next;
+        h.next = null;
+        return l.next;
     }
 
     /**
@@ -105,7 +264,6 @@ public class LinkedListProblems {
             next = head.next;
             head.next = pre;
             pre = head;
-
             head = next;
         }
     }
@@ -295,7 +453,7 @@ public class LinkedListProblems {
     }
 
     /**
-     * 删除链表中重复节点
+     * 删除链表中重复节点(重复节点一个不留)
      */
     public Node delRepl(Node n) {
         if (n == null || n.next == null)
