@@ -14,6 +14,7 @@
         <module>DataStruct</module>
         <module>juc</module>
         <module>spring</module>
+        <module>JavaThread</module>
     </modules>
 
 
