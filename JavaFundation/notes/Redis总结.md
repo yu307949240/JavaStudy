@@ -338,7 +338,7 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 
 * **1.noeviction：默认策略，不会删除任何数据，拒绝所有写入操作并返回客户端错误信息，只接收读操作**
 * **2.volatile-lru：根据LRU算法删除设置了超时属性的键，直到腾出空间为止，如果没有可以删除的键对象，回退到noeviction策略**
-* **3.allKeys-lru：根绝LRU算法删除键，不管数据有没有设置超时属性，直到腾出足够空间为止。**
+* **3.allKeys-lru：根据LRU算法删除键，不管数据有没有设置超时属性，直到腾出足够空间为止。**
 * **4.allKeys-random：随机删除所有键，直到腾出足够空间为止。**
 * **5.vlatile-random：随机删除过期键，直到腾出足够空间为止。**
 * **6.volatile-ttl：根据键值对象的ttl属性，删除最近将要过去数据，如果没有，回退到noeviction属性。**
