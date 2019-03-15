@@ -341,7 +341,7 @@ https://github.com/CyC2018/CS-Notes/blob/master/notes/%E5%88%86%E5%B8%83%E5%BC%8
 * **3.allKeys-lru：根据LRU算法删除键，不管数据有没有设置超时属性，直到腾出足够空间为止。**
 * **4.allKeys-random：随机删除所有键，直到腾出足够空间为止。**
 * **5.vlatile-random：随机删除过期键，直到腾出足够空间为止。**
-* **6.volatile-ttl：根据键值对象的ttl属性，删除最近将要过去数据，如果没有，回退到noeviction属性。**
+* **6.volatile-ttl：根据键值对象的ttl属性，删除最近将要过期的数据，如果没有，回退到noeviction属性。**
 
 ## 1.13 Gossip协议
 
