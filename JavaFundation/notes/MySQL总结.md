@@ -96,6 +96,9 @@ select * from tuser where name like '张 %' and age=10 and ismale=1;
 （1）避免全表扫描；  
 （2）随机I/O变成顺序I/O，查询效率更高，磁盘读写代价更低；  
 （3）帮助服务器避免排序和分组，以及避免创建临时表(不使用索引时，排序和分组需要创建临时表，当使用B+索引，由于本身有序，不需要创建临时表)。  
+### 1.9 索引相关优化
+（1）show index from table; -- 查询table所有索引
+（2）有时候mysql会选错索引，执行analyze table t即可修复，select * from t where a between 10000 and 20000;(a列有索引)，explain显示![image](https://user-images.githubusercontent.com/30522257/119502241-509dd180-bd9c-11eb-9367-264775556547.png)(解释：因为这里mysql会认为查询a的时候会进行回表查询，预估会导致很慢，所以就直接查询全表)![image](https://user-images.githubusercontent.com/30522257/119502631-b5f1c280-bd9c-11eb-8dfc-8c6b2b0c5b7d.png)
 
 ## 2.MySQL中的锁(表锁和行锁)
 
