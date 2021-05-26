@@ -1,1 +1,12 @@
-
+# 2.高内存占用
+在Java虚拟机中，内存分为三个代：新生代（New）、老生代（Old）、永久代（Perm）。
+（1）新生代New：新建的对象都存放这里
+（2）老生代Old：存放从新生代New中迁移过来的生命周期较久的对象。新生代New和老生代Old共同组成了堆内存。
+（3）永久代Perm：是非堆内存的组成部分。主要存放加载的Class类级对象如class本身，method，field等等。
+如果出现java.lang.OutOfMemoryError: Java heap space异常，说明Java虚拟机的堆内存不够。原因有二：
+（1）Java虚拟机的堆内存设置不够，可以通过参数-Xms、-Xmx来调整。
+（2）代码中创建了大量大对象，并且长时间不能被垃圾收集器收集（存在被引用）。
+总结下排查内存故障的方法和技巧：
+- 1、top命令：Linux命令。可以查看实时的内存使用情况。  
+- 2、jmap -histo:live [pid]，然后分析具体的对象数目和占用内存大小，从而定位代码。
+- 3、jmap -dump:live,format=b,file=xxx.xxx [pid]，然后利用MAT工具分析是否存在内存泄漏等等。
