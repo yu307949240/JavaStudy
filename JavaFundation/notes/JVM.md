@@ -7,7 +7,8 @@
 ![image](https://user-images.githubusercontent.com/30522257/119643157-02490b00-be4e-11eb-832b-5e4cf19c1f7e.png)
 # 四.辅助信息
 ![image](https://user-images.githubusercontent.com/30522257/119643210-112fbd80-be4e-11eb-961f-3f20e506f5cd.png)
-# 五.经验&&规则
+# 五.美团gc调优：https://tech.meituan.com/2017/12/29/jvm-optimize.html
+# 六.经验&&规则
 ## 1.年轻代大小选择
 - 响应时间优先的应用:尽可能设大,直到接近系统的最低响应时间限制(根据实际情况选择).在此种情况下,年轻代收集发生的频率也是最小的.同时,减少到达年老代的对象.  
 - 吞吐量优先的应用:尽可能的设置大,可能到达Gbit的程度.因为对响应时间没有要求,垃圾收集可以并行进行,一般适合8CPU以上的应用.  
