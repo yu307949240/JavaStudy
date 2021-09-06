@@ -9,7 +9,7 @@
 # MySQL
 ## [MySQL总结](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/MySQL%E6%80%BB%E7%BB%93.md)
 # Redis
-## [Redis读书笔记](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/%E3%80%8ARedis%E5%BC%80%E5%8F%91%E4%B8%8E%E8%BF%90%E7%BB%B4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0.md)
+* [Redis读书笔记](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/%E3%80%8ARedis%E5%BC%80%E5%8F%91%E4%B8%8E%E8%BF%90%E7%BB%B4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0.md)
 # 算法
 ## [算法](/DataStruct/README.md)
 * [排序算法](https://github.com/yu307949240/JavaStudy/blob/master/DataStruct/README.md#%E4%B8%80%E6%8E%92%E5%BA%8F)
