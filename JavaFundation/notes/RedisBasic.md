@@ -241,12 +241,12 @@ Redis 缓存穿透指的是攻击者故意大量请求一些Redis缓存中不存
 ##### 2.先更新数据库，异步删除缓存，删除失败后重试
  先更新数据库，异步删除缓存，删除缓存失败时，继续异步重试，或者将操作放到消息队列中，再进行删除操作。（如果数据库是读写分离的，那么删除缓存时需要延迟删除，否则可能会在删除缓存时，从库还没有收到更新后的数据，其他读请求就去从库读到旧数据然后设置到缓存中。）
 
-![image](/JavaStudy/master/pics/redis.png)
+![image](/JavaStudy/tree/master/pics/redis.png)
 
 ##### 3.业务项目更新数据库，其他项目订阅binlog更新
 
 业务项目直接更新数据库，然后其他项目订阅binlog，接收到更新数据库操作的消息后，更新缓存，更新缓存失败时，新建异步线程去重试或者将操作发到消息队列，然后后续进行处理。但是这种方案更新mysql后还是有一定延迟，缓冲中才是新值。
 
-![image](/JavaStudy/master/pics/redis-binlog.png)
+![image](/JavaStudy/tree/master/pics/redis-binlog.png)
 
 参考资料：https://www.jianshu.com/p/945446317e7a
