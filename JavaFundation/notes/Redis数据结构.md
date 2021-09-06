@@ -187,11 +187,11 @@ f(h)=n/(2^h)
 第一层 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
 ```
 
-![image-20200802160611901](../static/image-20200802160611901.png)
+![image-20200802160611901](https://github.com/NotFound9/interviewGuide/blob/master/static/image-20200802160611901.png)
 
 
 
-![查找的时间复杂度证明.jpeg](../static/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0NDEyNTc5,size_16,color_FFFFFF,t_70.jpeg)
+![查找的时间复杂度证明.jpeg](https://github.com/NotFound9/interviewGuide/blob/master/static/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0NDEyNTc5,size_16,color_FFFFFF,t_70.jpeg)
 
 但是这种全索引的结构有缺点，就是之后在插入新节点时，是没有办法为新节点添加一些新的索引节点的。所以有可能会导致一个小区间内有很多个节点，查找时近似于单链表，这样时间复杂度就变成O(N)了，所以Redis对跳跃表做了一些优化，可以简单认为会计算出一个随机数，代表这个添加添加的索引层数，然后进行添加。同时假设节点拥有k层索引的概率f(k)，节点拥有k-1层索引结构的概率为f(k-1)，f(k) = f(k-1)*P,假设p为1/2，那么也就是f(k)=f(k-1)\*0.5，那么第k层的索引节点数也就是为k-1层的0.5倍。最终索引结构跟上面的这种全索引结构是类似的，只是索引节点不一定分布均匀。空间复杂度=每一层索引节点数=n+n/2+n/4….=2n。Redis做了优化，发现P取1/4时，时间复杂度跟P取1/2是一样的，并且空间复杂度更低。
 
@@ -216,13 +216,13 @@ Redis计算总层数的算法大致是，初始层数是1层，在while循环内
 
 新插入了很多节点后带来的问题：
 
-![img](https://github.com/NotFound9/interviewGuide/blob/master/static/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0NDEyNTc5,size_16,color_FFFFFF,t_70.jpeg)
+![img](https://github.com/NotFound9/interviewGuide/blob/master/static/20190930010605363.jpeg)
 
 时间复杂度与空间复杂度
 
 空间复杂度的公式是 空间复杂度= 1/(1-P)
 
-![img](https://github.com/NotFound9/interviewGuide/blob/master/static/20190930010605363.jpeg)
+![img](https://github.com/NotFound9/interviewGuide/blob/master/static/640-6358760.png)
 
 
 
