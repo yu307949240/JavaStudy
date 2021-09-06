@@ -10,7 +10,7 @@
 * [MySQL总结](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/MySQL%E6%80%BB%E7%BB%93.md)
 ## Redis
 * [基础](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/Redis%E5%9F%BA%E7%A1%80.md)
-#### [1.Redis是什么？](#Redis是什么)
+  * [1.Redis是什么？](#Redis是什么)
 #### [2.Redis过期key是怎么样清理的？](#Redis过期key是怎么样清理的)
 #### [3.Redis为什么是单线程的？](#Redis为什么是单线程的)
 #### [4.Redis的性能为什么这么高？](#Redis的性能为什么这么高)
