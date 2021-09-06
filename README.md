@@ -19,6 +19,12 @@
   * [7.如何解决Redis缓存雪崩问题？](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/Redis%E5%9F%BA%E7%A1%80.md)
   * [8.如何解决缓存与数据库的数据一致性问题？](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/Redis%E5%9F%BA%E7%A1%80.md)
 * [数据结构](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/Redis%E5%9F%BA%E7%A1%80.md)
+  * [1.Redis常见的数据结构有哪些？](#Redis常见的数据结构有哪些)
+  * [2.谈一谈你对Redis中简单动态字符串的理解？](#谈一谈你对Redis中简单动态字符串的理解)
+  * [3.谈一谈你对Redis中hash对象的理解？](#谈一谈你对Redis中hash对象的理解)
+  * [4.谈一谈你对Redis中List的理解？](#谈一谈你对Redis中List的理解)
+  * [5.谈一谈你对Redis中Set的理解？](#谈一谈你对Redis中Set的理解)
+  * [6.谈一谈你对Redis中有序集合ZSet的理解？](#谈一谈你对Redis中有序集合ZSet的理解)
 * [Redis读书笔记](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/%E3%80%8ARedis%E5%BC%80%E5%8F%91%E4%B8%8E%E8%BF%90%E7%BB%B4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0.md)
 ## 算法
 * [算法](/DataStruct/README.md)
