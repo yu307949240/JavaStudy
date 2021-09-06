@@ -216,7 +216,7 @@ Redis计算总层数的算法大致是，初始层数是1层，在while循环内
 
 新插入了很多节点后带来的问题：
 
-![img](../static/20190930010605363.jpeg)
+![img](https://github.com/NotFound9/interviewGuide/blob/master/static/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM0NDEyNTc5,size_16,color_FFFFFF,t_70.jpeg)
 
 时间复杂度与空间复杂度
 
