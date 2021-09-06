@@ -10,6 +10,14 @@
 * [MySQL总结](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/MySQL%E6%80%BB%E7%BB%93.md)
 ## Redis
 * [基础](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/Redis%E5%9F%BA%E7%A1%80.md)
+#### [1.Redis是什么？](#Redis是什么)
+#### [2.Redis过期key是怎么样清理的？](#Redis过期key是怎么样清理的)
+#### [3.Redis为什么是单线程的？](#Redis为什么是单线程的)
+#### [4.Redis的性能为什么这么高？](#Redis的性能为什么这么高)
+#### [5.如何解决Redis缓存穿透问题？](#如何解决Redis缓存穿透问题)
+#### [6.如何解决Redis缓存击穿问题？](#如何解决Redis缓存击穿问题)
+#### [7.如何解决Redis缓存雪崩问题？](#如何解决Redis缓存雪崩问题)
+#### [8.如何解决缓存与数据库的数据一致性问题？](#如何解决缓存与数据库的数据一致性问题)
 * [数据结构](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/Redis%E5%9F%BA%E7%A1%80.md)
 * [Redis读书笔记](https://github.com/yu307949240/JavaStudy/blob/master/JavaFundation/notes/%E3%80%8ARedis%E5%BC%80%E5%8F%91%E4%B8%8E%E8%BF%90%E7%BB%B4%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0.md)
 ## 算法
