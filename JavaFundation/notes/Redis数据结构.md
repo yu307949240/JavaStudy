@@ -222,7 +222,7 @@ Redis计算总层数的算法大致是，初始层数是1层，在while循环内
 
 空间复杂度的公式是 空间复杂度= 1/(1-P)
 
-![img](../static/640-6358760.png)
+![img](https://github.com/NotFound9/interviewGuide/blob/master/static/20190930010605363.jpeg)
 
 
 
